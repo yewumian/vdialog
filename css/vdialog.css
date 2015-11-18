@@ -89,3 +89,11 @@
   border-color: #c8c8c8;
   background-color: #fff;
 }
+.vdialog-modal {
+  width: 100%;
+  left: 0;
+  height: 0;
+  position: absolute;
+  opacity: .6;
+  background-color: #000;
+}

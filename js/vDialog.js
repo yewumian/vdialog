@@ -1,14 +1,17 @@
 (function(window, undefined) {
+  var zIndex = 1000;
+
   function VDialog(options) {
+    this.version = '1.0.0';
     this.options = $.extend({
       title: '提示信息',
       content: '',
       okVal: '确定',
       cancelVal: '取消'
     }, options);
-    this.init();
-    return this;
+    return this.init();
   }
+
   VDialog.prototype._init = function() {
     var that = this,
       html = '<div class="vdialog">\
@@ -27,12 +30,9 @@
       title: html.find('.vd-header .vd-title'),
       close: html.find('.vd-header .vd-close'),
       content: html.find('.vd-content'),
-      footer: html.find('.vd-footer')
+      footer: html.find('.vd-footer'),
+      modal: null
     };
-    // 关闭事件
-    this.DOM.close.on('click', function() {
-      that.close();
-    });
     // 确定按钮
     if (this.options.ok !== undefined) {
       this.ok();
@@ -41,13 +41,24 @@
     if (this.options.cancel !== undefined) {
       this.cancel();
     }
+    // 关闭事件
+    this.DOM.close.on('click', function() {
+      that.close();
+    });
     if (this.options.close !== undefined) {
       this.close(this.options.close);
     }
     // 标题
     this.title(this.options.title);
+    // 尺寸
+    if (this.options.width !== undefined) {
+      this.width(this.options.width);
+    }
+    if (this.options.height !== undefined) {
+      this.height(this.options.height);
+    }
     // 创建 DOM
-    this.DOM.wrap.appendTo('body');
+    this._build();
 
     // 内容，需要放到创建 DOM 之后
     this.content(this.options.content);
@@ -55,6 +66,15 @@
     this.inited = true;
     return this;
   }
+
+  VDialog.prototype._build = function() {
+    //index
+    this.DOM.wrap.css({
+      zIndex: ++zIndex
+    });
+    this.DOM.wrap.appendTo('body');
+  };
+
   VDialog.prototype.init = function(fn) {
     if (!this.inited) {
       this._init();
@@ -135,9 +155,24 @@
       }
     } else {
       this.DOM.wrap.remove();
+      this.DOM.modal && this.DOM.modal.remove();
       if (typeof this.options.close === 'function') {
         this.options.close();
       }
+    }
+    return this;
+  };
+  VDialog.prototype.width = function(width) {
+    if (width !== undefined) {
+      this.options.width = width;
+      this.DOM.content.width(this.options.width);
+    }
+    return this;
+  };
+  VDialog.prototype.height = function(height) {
+    if (height !== undefined) {
+      this.options.height = height;
+      this.DOM.content.height(this.options.height);
     }
     return this;
   };
@@ -160,6 +195,15 @@
       left: left + 'px',
       top: top + 'px'
     });
+    return this;
+  };
+
+  VDialog.prototype.showModal = function() {
+    var height = Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight);
+    this.DOM.modal = $('<div />').addClass('vdialog-modal').css({
+      zIndex: zIndex,
+      height: height
+    }).insertBefore(this.DOM.wrap);
     return this;
   };
 

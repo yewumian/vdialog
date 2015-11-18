@@ -11,14 +11,16 @@
 <script>
 vDialog({
   title: '欢迎消息',
-  content: '欢迎使用 vDialog 对话框！',
+  content: '欢迎使用 vDialog 对话框组件！',
   ok: function(){
     alert('你点了确定按钮');
   },
   cancel: function(){
     alert('你点了取消按钮');
-  }
-});
+  },
+  width: 800,
+  height: 300
+}).showModal();
 </script>
 </body>
 </html>
