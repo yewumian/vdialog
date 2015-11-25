@@ -70,6 +70,14 @@
   padding: 1em;
   text-align: right;
 }
+.vdialog .vd-footer:before {
+  content: '';
+  display: block;
+  background-color: #eee;
+  background-image: linear-gradient(90deg, #fff, #eee);
+  height: 1px;
+  margin-bottom: 15px;
+}
 .vdialog .vd-footer a.vd-btn {
   display: inline-block;
   color: #fff;
@@ -92,7 +100,7 @@
 .vdialog-modal {
   width: 100%;
   left: 0;
-  height: 0;
+  top: 0;
   position: absolute;
   opacity: .6;
   background-color: #000;

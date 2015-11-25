@@ -177,13 +177,14 @@
     return this;
   };
   VDialog.prototype.position = function() {
-    var left, top, scrollSize = {
-        left: document.documentElement.scrollLeft,
-        top: document.documentElement.scrollTop
+    var left, top, el = document.documentElement,
+      scrollSize = {
+        left: el.scrollLeft,
+        top: el.scrollTop
       },
       screenSize = {
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight
+        width: el.clientWidth,
+        height: el.clientHeight
       },
       dialogSize = {
         width: this.DOM.wrap.outerWidth(),
@@ -199,7 +200,8 @@
   };
 
   VDialog.prototype.showModal = function() {
-    var height = Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight);
+    var el = document.documentElement,
+      height = Math.max(el.clientHeight, el.scrollHeight);
     this.DOM.modal = $('<div />').addClass('vdialog-modal').css({
       zIndex: zIndex,
       height: height
