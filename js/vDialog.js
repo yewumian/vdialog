@@ -52,8 +52,7 @@
    * @return {this}
    */
   VDialog.prototype._init = function() {
-    var that = this,
-      html = $(template);
+    var html = $(template);
     // 缓存 DOM
     this.DOM = {
       wrap: html,
