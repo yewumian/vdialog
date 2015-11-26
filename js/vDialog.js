@@ -130,16 +130,14 @@
    * @return {this|string}
    */
   VDialog.prototype.title = function(title) {
-    var toggleName = 'vd-header-no-title';
+    var toggleName = 'vdialog-no-title';
     if (title === true) {
       // 显示标题
-      this.DOM.title.show();
-      this.DOM.header.removeClass(toggleName);
+      this.DOM.wrap.removeClass(toggleName);
       return this;
     } else if (title === false) {
       // 隐藏标题
-      this.DOM.title.hide();
-      this.DOM.header.addClass(toggleName);
+      this.DOM.wrap.addClass(toggleName);
       return this;
     } else if (typeof title === 'string') {
       // 设置标题

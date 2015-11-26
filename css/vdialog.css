@@ -33,11 +33,15 @@
     opacity: 1;
   }
 }
+.vdialog {
+  *padding-top: 3.5em;
+}
 .vdialog .vd-header {
   position: relative;
-}
-.vdialog .vd-header-no-title {
-  height: 1em;
+  *position: absolute;
+  *width: 100%;
+  *left: 0;
+  *top: 0;
 }
 .vdialog .vd-header .vd-title {
   padding: .8em 2em .8em 1em;
@@ -60,7 +64,16 @@
 .vdialog .vd-header a.vd-close:hover {
   opacity: 1;
 }
-.vdialog .vd-header-no-title a.vd-close {
+.vdialog-no-title {
+  *padding-top: 1em;
+}
+.vdialog-no-title .vd-header {
+  height: 1em;
+}
+.vdialog-no-title .vd-header .vd-title {
+  display: none;
+}
+.vdialog-no-title .vd-header a.vd-close {
   top: 1em;
   right: .5em;
 }
