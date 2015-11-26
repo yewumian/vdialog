@@ -39,7 +39,7 @@ vDialog({
 
   * ok 点击确定按钮执行的方法
 
-  * ok 确认按钮的文本，默认为“确定”
+  * okValue 确认按钮的文本，默认为“确定”
 
   * cancel 点击取消按钮执行的方法
 
@@ -67,9 +67,9 @@ vDialog({
 
 ### 属性
 
-* topvDialog顶层对话框
+* top 顶层对话框
 
-* returnValueAny对话框关闭或退出时的返回值
+* returnValue 对话框关闭或退出时的返回值
 
 ### 方法
 
@@ -81,17 +81,17 @@ vDialog({
 
 * cancel() 设置或执行取消按钮事件
 
-* show([anchor])
+* show() 显示对话框
 
-* showModal([anchor])
+* showModal() 显示模态对话框
 
-* hide()
+* hide() 隐藏对话框
 
 * close() 设置关闭窗口事件或关闭窗口
 
 ### 事件
 
-* on
+* on 监听事件
 
   * show
 
@@ -101,7 +101,7 @@ vDialog({
 
   * cancel
 
-* emit
+* emit 执行自定义事件
 
 ### 详细文档
 
