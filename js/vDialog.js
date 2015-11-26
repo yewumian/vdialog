@@ -106,7 +106,8 @@
    * @return {this}
    */
   VDialog.prototype._build = function() {
-    var wrap = this.DOM.wrap;
+    var that = this,
+      wrap = this.DOM.wrap;
     // 关闭事件
     this.DOM.close.on('click', function() {
       that.close();
