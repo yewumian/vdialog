@@ -1,6 +1,7 @@
 .vdialog {
   position: absolute;
   font-size: 14px;
+  line-height: 1.5em;
   min-width: 200px;
   border: 1px solid #bcbcbc;
   border-radius: 3px;
@@ -67,7 +68,8 @@
   padding: 1em;
 }
 .vdialog .vd-footer {
-  padding: 1em;
+  display: none;
+  padding: 0 1em 1em;
   text-align: right;
 }
 .vdialog .vd-footer:before {
