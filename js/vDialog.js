@@ -1,3 +1,12 @@
+/*!
+ * vDialog v1.0.0
+ * HTML5 based javascript dialog plugin
+ * https://www.qque.com/vDialog
+ *
+ * Copyright 2012-2015 pillys@163.com
+ * Released under the MIT license
+ */
+
 (function(window, undefined) {
   'use strict';
 
