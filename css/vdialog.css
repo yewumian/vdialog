@@ -1,8 +1,15 @@
+@font-face {
+  font-family: 'vdfont';
+  src: url('../fonts/vdfont.eot'); /* IE9*/
+  src: url('../fonts/vdfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/vdfont.woff') format('woff'), /* chrome、firefox */
+  url('../fonts/vdfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('../fonts/vdfont.svg#vdfont') format('svg'); /* iOS 4.1- */
+}
 .vdialog {
   position: absolute;
   font-size: 14px;
   line-height: 1.5em;
-  min-width: 200px;
   border: 1px solid #bcbcbc;
   border-radius: 3px;
   background-color: #fff;
@@ -12,6 +19,10 @@
   animation-fill-mode: both;
   -webkit-animation-name: vDialogZoomIn;
   animation-name: vDialogZoomIn;
+  *padding-top: 3.5em;
+}
+.vdialog-fixed {
+  position: fixed;
 }
 @-webkit-keyframes vDialogZoomIn {
   from {
@@ -32,9 +43,6 @@
   50% {
     opacity: 1;
   }
-}
-.vdialog {
-  *padding-top: 3.5em;
 }
 .vdialog .vd-header {
   position: relative;
@@ -77,8 +85,50 @@
   top: 1em;
   right: .5em;
 }
-.vdialog .vd-content {
+.vdialog .vd-main {
+  position: relative;
+}
+.vdialog .vd-main .vd-icon {
+  display: none;
+  position: absolute;
+  left: 15px;
+  top: 0;
+  font-family: "vdfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  width: 50px;
+  font-size: 38px;
+  padding: 10px 0;
+  line-height: 1em;
+  text-align: center;
+}
+.vdialog .vd-main-with-icon {
+  padding: 5px 15px 0 65px;
+}
+.vdialog .vd-main-with-icon .vd-icon {
+  display: block;
+}
+.vdialog .vd-main-with-icon .icon-vd-error:before {
+  content: "\e600";
+  color: #d9534f;
+}
+.vdialog .vd-main-with-icon .icon-vd-alert:before {
+  content: "\e601";
+  color: #f0ad4e;
+}
+.vdialog .vd-main-with-icon .icon-vd-success:before {
+  content: "\e602";
+  color: #5cb85c;
+}
+.vdialog .vd-main-with-icon .icon-vd-confirm:before {
+  content: "\e603";
+  color: #eea237;
+}
+.vdialog .vd-main .vd-content {
   padding: 1em;
+  min-width: 8em;
 }
 .vdialog .vd-footer {
   display: none;

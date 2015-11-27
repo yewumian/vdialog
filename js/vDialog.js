@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.0.0
+ * vDialog v1.1.0
  * HTML5 based javascript dialog plugin
  * https://www.qque.com/vDialog
  *
@@ -18,14 +18,18 @@
         <div class="vd-title"></div>\
         <a class="vd-close" href="javascript:;">&times;</a>\
       </div>\
-      <div class="vd-content"></div>\
+      <div class="vd-main">\
+        <div class="vd-icon"></div>\
+        <div class="vd-content"></div>\
+      </div>\
       <div class="vd-footer"></div>\
     </div>';
 
   function VDialog(options) {
-    this.version = '1.0.0';
+    this.version = '1.1.0';
     this.options = $.extend({
       id: '',
+      type: '',
       title: '提示信息',
       content: '',
       init: null,
@@ -34,6 +38,7 @@
       cancel: null,
       cancelValue: '取消',
       modal: false,
+      fixed: false,
       close: null,
       esc: true,
       width: 'auto',
@@ -59,7 +64,9 @@
       header: html.find('.vd-header'),
       title: html.find('.vd-header .vd-title'),
       close: html.find('.vd-header .vd-close'),
-      content: html.find('.vd-content'),
+      main: html.find('.vd-main'),
+      icon: html.find('.vd-main .vd-icon'),
+      content: html.find('.vd-main .vd-content'),
       footer: html.find('.vd-footer'),
       modal: null
     };
@@ -69,6 +76,8 @@
     }
     // 标题
     this.title(this.options.title);
+    // 图标
+    this.type(this.options.type);
     // 确定按钮
     this.ok(this.options.ok);
     // 取消按钮
@@ -78,6 +87,8 @@
     // 尺寸
     this.width(this.options.width);
     this.height(this.options.height);
+    // 随屏滚动
+    this.fixed(this.options.fixed);
     // ESC 退出
     this._esc();
     // 创建 DOM
@@ -121,6 +132,30 @@
       dialog: this
     });
     this._top();
+    return this;
+  };
+  /**
+   * 设置对话框类型（图标）
+   * @method type
+   * @param  {string|boolean} name 类型名称：alert / success / confirm / error
+   * @return {this|string}
+   */
+  VDialog.prototype.type = function(name) {
+    var toggleName = 'vd-main-with-icon';
+    if (name === '') {
+      // 隐藏图标
+      this.DOM.main.removeClass(toggleName);
+      return this;
+    } else if (typeof name === 'string') {
+      // 设置图标
+      this.options.type = name;
+      this.DOM.main.addClass(toggleName);
+      this.DOM.icon.removeClass().addClass('vd-icon icon-vd-' + this.options.type);
+      return this;
+    } else if (name === undefined) {
+      // 读取图标
+      return this.options.type;
+    }
     return this;
   };
   /**
@@ -357,15 +392,22 @@
    */
   VDialog.prototype.position = function() {
     var left, top, scrollSize, screenSize, dialogSize, el = document.documentElement || document.body;
-    if (window.pageYOffset !== undefined) {
+    if (this.options.fixed) {
       scrollSize = {
-        left: window.pageXOffset,
-        top: window.pageYOffset
+        left: 0,
+        top: 0
       };
     } else {
-      scrollSize = {
-        left: el.scrollLeft,
-        top: el.scrollTop
+      if (window.pageYOffset !== undefined) {
+        scrollSize = {
+          left: window.pageXOffset,
+          top: window.pageYOffset
+        };
+      } else {
+        scrollSize = {
+          left: el.scrollLeft,
+          top: el.scrollTop
+        }
       }
     }
     screenSize = {
@@ -390,6 +432,30 @@
       left: isNaN(left) ? left : (left + 'px'),
       top: isNaN(top) ? top : (top + 'px')
     });
+    return this;
+  };
+  /**
+   * 随屏滚动
+   * @method fixed
+   * @param  {Boolean} fixed 是否随屏幕滚动
+   * @return {this}
+   */
+  VDialog.prototype.fixed = function(fixed) {
+    if (fixed === undefined) {
+      return this.options.fixed;
+    } else {
+      this.options.fixed = !!fixed;
+      // IE6 不支持 fixed
+      if ((/msie\s*(\d+)\.\d+/g.exec(navigator.userAgent.toLowerCase()) || [0, '0'])[1] == '6') {
+        fixed = false;
+      }
+      if (fixed) {
+        this.DOM.wrap.addClass('vdialog-fixed');
+      } else {
+        this.DOM.wrap.removeClass('vdialog-fixed');
+      }
+      this.position();
+    }
     return this;
   };
   /**
@@ -508,6 +574,9 @@
     return this;
   };
   /**
+   * --------------------------- vDialog --------------------------
+   */
+  /**
    * vDialog 实例
    * @method vDialog
    * @param  {Object} options 参数
@@ -517,6 +586,124 @@
     return new VDialog(options);
   };
   vDialog.top = null;
+  vDialog._proxy = vDialog;
 
+  /**
+   * vDialog.alert
+   * @method alert
+   * @param  {String}   content 提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} fn      关闭对话框时，执行的回调
+   * @return {this}
+   */
+  vDialog.alert = function(content, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'alert',
+      title: '提示信息',
+      content: content,
+      modal: true,
+      fixed: true,
+      ok: function() {
+        fn && fn.call(this);
+      },
+      close: function() {
+        fn && fn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
+
+  /**
+   * vDialog.success
+   * @method success
+   * @param  {String}   content 成功提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} fn      关闭对话框时，执行的回调
+   * @return {this}
+   */
+  vDialog.success = function(content, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'success',
+      title: '成功提示',
+      content: content,
+      modal: true,
+      fixed: true,
+      ok: function() {
+        fn && fn.call(this);
+      },
+      close: function() {
+        fn && fn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
+
+  /**
+   * vDialog.error
+   * @method error
+   * @param  {String}   content 错误提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} fn      关闭对话框时，执行的回调
+   * @return {this}
+   */
+  vDialog.error = function(content, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'error',
+      title: '错误提示',
+      content: content,
+      modal: true,
+      fixed: true,
+      ok: function() {
+        fn && fn.call(this);
+      },
+      close: function() {
+        fn && fn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
+
+  /**
+   * vDialog.confirm
+   * @method confirm
+   * @param  {String}   content 确认提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} okFn      点击确定按钮时，执行的回调
+   * @param  {Function} cancelFn      点击取消按钮时，执行的回调
+   * @return {this}
+   */
+  vDialog.confirm = function(content, options, okFn, cancelFn) {
+    if (typeof options === 'function') {
+      cancelFn = okFn;
+      okFn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'confirm',
+      title: '确认信息',
+      content: content,
+      modal: true,
+      fixed: true,
+      ok: function() {
+        okFn && okFn.call(this);
+      },
+      cancel: function() {
+        cancelFn && cancelFn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
   window.vDialog = vDialog;
 })(window);
