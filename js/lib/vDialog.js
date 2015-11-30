@@ -7,7 +7,43 @@
  * Released under the MIT license
  */
 
-(function(window, undefined) {
+// Uses CommonJS, AMD, CMD or browser globals to create a jQuery plugin.
+// See: https://github.com/umdjs/umd
+(function(root, factory) {
+  if (typeof define === 'function') {
+    if (define.amd) {
+      // AMD, require.js
+      define(['jquery'], function(jquery) {
+        return factory(jQuery);
+      });
+    } else if (define.cmd) {
+      // CMD, for sea.js
+      define(function(require, exports, module) {
+        var jQuery = require('jquery');
+        return factory(jQuery);
+      });
+    }
+  } else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function(root, jQuery) {
+      if (jQuery === undefined) {
+        // require('jQuery') returns a factory that requires window to
+        // build a jQuery instance, we normalize how we use modules
+        // that require this pattern but the window provided is a noop
+        // if it's defined (how jquery works)
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        } else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      module.exports = factory(jQuery);
+    };
+  } else {
+    // Browser globals (root is window)
+    root.vDialog = factory(jQuery);
+  }
+}(this, function($) {
   'use strict';
 
   var vDialog, zIndex = 1000,
@@ -705,5 +741,5 @@
     }, options);
     return this._proxy(options);
   };
-  window.vDialog = vDialog;
-})(window);
+  return vDialog;
+}));
