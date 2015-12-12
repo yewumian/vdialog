@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.1.0
+ * vDialog v1.1.1
  * HTML5 based javascript dialog plugin
  * https://www.qque.com/vDialog
  *
@@ -62,7 +62,7 @@
     </div>';
 
   function VDialog(options) {
-    this.version = '1.1.0';
+    this.version = '1.1.1';
     this.options = $.extend({
       id: '',
       type: '',
@@ -643,9 +643,7 @@
       content: content,
       modal: true,
       fixed: true,
-      ok: function() {
-        fn && fn.call(this);
-      },
+      ok: true,
       close: function() {
         fn && fn.call(this);
       }
@@ -672,9 +670,7 @@
       content: content,
       modal: true,
       fixed: true,
-      ok: function() {
-        fn && fn.call(this);
-      },
+      ok: true,
       close: function() {
         fn && fn.call(this);
       }
@@ -701,9 +697,7 @@
       content: content,
       modal: true,
       fixed: true,
-      ok: function() {
-        fn && fn.call(this);
-      },
+      ok: true,
       close: function() {
         fn && fn.call(this);
       }
