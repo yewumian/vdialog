@@ -1,0 +1,24 @@
+{
+  "name": "vdialog",
+  "version": "1.0.0",
+  "description": "基于HTML5 Dialog API的优雅对话框组件",
+  "main": "js/lib/vDialog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pillys/vDialog.git"
+  },
+  "keywords": [
+    "dialog",
+    "HTML5"
+  ],
+  "author": "pillys@163.com",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/pillys/vDialog/issues"
+  },
+  "homepage": "https://github.com/pillys/vDialog#readme"
+}

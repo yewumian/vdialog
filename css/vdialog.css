@@ -162,6 +162,16 @@
   padding: 1em;
   min-width: 8em;
 }
+.vdialog-no-padding {
+  border: 0;
+  border-radius: 0;
+}
+.vdialog-no-padding.vdialog-no-title .vd-header {
+  height: 0;
+}
+.vdialog-no-padding .vd-main .vd-content {
+  padding: 0;
+}
 .vdialog .vd-footer {
   padding: 0 1em 1em;
   text-align: right;

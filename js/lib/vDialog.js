@@ -14,7 +14,7 @@
     if (define.amd) {
       // AMD, require.js
       define(['jquery'], function(jquery) {
-        return factory(jQuery);
+        return factory(jquery);
       });
     } else if (define.cmd) {
       // CMD, for sea.js
@@ -41,28 +41,28 @@
     };
   } else {
     // Browser globals (root is window)
-    root.vDialog = factory(jQuery);
+    root.vDialog = factory(root.jQuery);
   }
 }(this, function($) {
   'use strict';
 
   var vDialog, zIndex = 1000,
     cache = [],
-    template = '\
-    <div class="vdialog">\
-      <div class="vd-header">\
-        <div class="vd-title"></div>\
-        <a class="vd-close" href="javascript:;">&times;</a>\
-      </div>\
-      <div class="vd-main">\
-        <div class="vd-icon"></div>\
-        <div class="vd-content"></div>\
-      </div>\
-      <div class="vd-footer"></div>\
-    </div>';
+    template = '' +
+    '<div class="vdialog">' +
+    '  <div class="vd-header">' +
+    '    <div class="vd-title"></div>' +
+    '    <a class="vd-close" href="javascript:;">&times;</a>' +
+    '  </div>' +
+    '  <div class="vd-main">' +
+    '    <div class="vd-icon"></div>' +
+    '    <div class="vd-content"></div>' +
+    '  </div>' +
+    '  <div class="vd-footer"></div>' +
+    '</div>';
 
   function VDialog(options) {
-    this.version = '1.1.1';
+    this.version = '1.1.2';
     this.options = $.extend({
       id: '',
       type: '',
@@ -80,7 +80,8 @@
       width: 'auto',
       height: 'auto',
       left: 'auto',
-      top: 'auto'
+      top: 'auto',
+      padding: 'auto'
     }, options);
     this._eventQueue = {};
     this._visible = true;
@@ -93,7 +94,8 @@
    * @return {this}
    */
   VDialog.prototype._init = function() {
-    var html = $(template);
+    var that = this,
+      html = $(template);
     // 缓存 DOM
     this.DOM = {
       wrap: html,
@@ -123,6 +125,7 @@
     // 尺寸
     this.width(this.options.width);
     this.height(this.options.height);
+    this.padding(this.options.padding);
     // 随屏滚动
     this.fixed(this.options.fixed);
     // ESC 退出
@@ -137,6 +140,9 @@
     if (this.options.modal) {
       this.showModal();
     }
+    $(window).on('resize', function() {
+      that.position();
+    });
     return this;
   };
   VDialog.prototype.init = function(fn) {
@@ -309,8 +315,7 @@
    * @return {this}
    */
   VDialog.prototype.button = function(button, fn) {
-    var that = this,
-      footer, buttonDom, newButtonDom;
+    var footer, buttonDom, newButtonDom;
     footer = this.DOM.footer;
     if (fn === true) {
       fn = function() {};
@@ -422,6 +427,29 @@
     }
   };
   /**
+   * 设置对话框的padding
+   * @method padding
+   * @param  {Number|String} padding padding值
+   * @return {this}
+   */
+  VDialog.prototype.padding = function(padding) {
+    if (padding === undefined) {
+      return this.options.padding;
+    } else {
+      this.options.padding = padding;
+      if (this.options.padding === 0) {
+        this.DOM.wrap.addClass('vdialog-no-padding');
+      } else {
+        if (!isNaN(padding)) {
+          padding = padding + 'px';
+        }
+        this.DOM.content.css('padding', padding);
+      }
+      this.position();
+      return this;
+    }
+  };
+  /**
    * 重新设置对话框位置
    * @method position
    * @return {this}
@@ -443,7 +471,7 @@
         scrollSize = {
           left: el.scrollLeft,
           top: el.scrollTop
-        }
+        };
       }
     }
     screenSize = {
@@ -468,6 +496,9 @@
       left: isNaN(left) ? left : (left + 'px'),
       top: isNaN(top) ? top : (top + 'px')
     });
+    if (this.options.modal && this.DOM.modal) {
+      this.DOM.modal.height(Math.max(screenSize.height, el.scrollHeight));
+    }
     return this;
   };
   /**
@@ -482,7 +513,7 @@
     } else {
       this.options.fixed = !!fixed;
       // IE6 不支持 fixed
-      if ((/msie\s*(\d+)\.\d+/g.exec(navigator.userAgent.toLowerCase()) || [0, '0'])[1] == '6') {
+      if ((/msie\s*(\d+)\.\d+/g.exec(navigator.userAgent.toLowerCase()) || [0, '0'])[1] === '6') {
         fixed = false;
       }
       if (fixed) {
@@ -501,12 +532,13 @@
    * @return {this}
    */
   VDialog.prototype.show = function(anchor) {
+    var offset, height;
     this._visible = true;
     this.DOM.wrap.show();
     if (anchor) {
-      var anchor = $(anchor),
-        offset = anchor.offset(),
-        height = anchor.outerHeight(true);
+      anchor = $(anchor);
+      offset = anchor.offset();
+      height = anchor.outerHeight(true);
       this.options.left = offset.left;
       this.options.top = offset.top + height;
       this.position();
