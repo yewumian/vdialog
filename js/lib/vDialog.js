@@ -112,6 +112,8 @@
     if (!this.options.id) {
       this.options.id = Math.random();
     }
+    // 创建 DOM
+    this._build();
     // 标题
     this.title(this.options.title);
     // 图标
@@ -130,8 +132,6 @@
     this.fixed(this.options.fixed);
     // ESC 退出
     this._esc();
-    // 创建 DOM
-    this._build();
     // 内容，因为涉及到位置、尺寸计算，所以需要放到创建 DOM 之后
     this.content(this.options.content);
     // init
