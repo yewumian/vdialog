@@ -496,9 +496,6 @@
       left: isNaN(left) ? left : (left + 'px'),
       top: isNaN(top) ? top : (top + 'px')
     });
-    if (this.options.modal && this.DOM.modal) {
-      this.DOM.modal.height(Math.max(screenSize.height, el.scrollHeight));
-    }
     return this;
   };
   /**
@@ -553,11 +550,8 @@
    * @return {this}
    */
   VDialog.prototype.showModal = function(anchor) {
-    var el = document.documentElement,
-      height = Math.max(el.clientHeight, el.scrollHeight);
     this.DOM.modal = $('<div />').addClass('vdialog-modal').css({
-      zIndex: zIndex,
-      height: height
+      zIndex: zIndex
     }).insertBefore(this.DOM.wrap);
     this.show(anchor);
     return this;
