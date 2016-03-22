@@ -41,7 +41,7 @@
     };
   } else {
     // Browser globals (root is window)
-    root.vDialog = factory(root.jQuery);
+    root.vDialog = root.vdialog = factory(root.jQuery);
   }
 }(this, function($) {
   'use strict';
@@ -353,7 +353,8 @@
         buttonDom.replaceWith(newButtonDom);
       }
       fn && newButtonDom.on('click.vDialog', fn);
-      footer.show();
+      //footer.show();
+      footer.css('display', 'block');
       return this;
     }
   };
