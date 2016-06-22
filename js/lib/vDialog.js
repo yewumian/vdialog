@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.1.1
+ * vDialog v1.3.0
  * HTML5 based javascript dialog plugin
  * https://www.qque.com/vDialog
  *
@@ -41,12 +41,12 @@
     };
   } else {
     // Browser globals (root is window)
-    root.vDialog = root.vdialog = factory(root.jQuery);
+    root.vDialog = root.vdialog = factory(jQuery);
   }
 }(this, function($) {
   'use strict';
 
-  var vDialog, zIndex = 1000,
+  var vdialog, zIndex = 1000, // jshint ignore:line
     cache = [],
     template = '' +
     '<div class="vdialog">' +
@@ -62,7 +62,7 @@
     '</div>';
 
   function VDialog(options) {
-    this.version = '1.1.2';
+    this.version = '1.3.0';
     this.options = $.extend({
       id: '',
       type: '',
@@ -77,6 +77,7 @@
       fixed: false,
       close: null,
       esc: true,
+      time: false,
       width: 'auto',
       height: 'auto',
       left: 'auto',
@@ -124,6 +125,8 @@
     this.cancel(this.options.cancel);
     // 关闭按钮
     this.close(this.options.close);
+    // 定时关闭
+    this.time(this.options.time);
     // 尺寸
     this.width(this.options.width);
     this.height(this.options.height);
@@ -318,9 +321,9 @@
     var footer, buttonDom, newButtonDom;
     footer = this.DOM.footer;
     if (fn === true) {
-      fn = function() {};
+      fn = function okFn() {};
     } else if (fn === false) {
-      fn = function() {
+      fn = function denyFn() {
         return false;
       };
     }
@@ -331,7 +334,7 @@
         return buttonDom;
       } else {
         // 设置指定按钮回调
-        fn && buttonDom.off('click.vDialog').on('click.vDialog', fn);
+        fn && buttonDom.off('click.vdialog').on('click.vdialog', fn);
         return this;
       }
     } else if (typeof button === 'object') {
@@ -352,8 +355,7 @@
       } else {
         buttonDom.replaceWith(newButtonDom);
       }
-      fn && newButtonDom.on('click.vDialog', fn);
-      //footer.show();
+      fn && newButtonDom.on('click.vdialog', fn);
       footer.css('display', 'block');
       return this;
     }
@@ -392,6 +394,21 @@
       if (typeof this.options.close === 'function') {
         this.options.close.call(this);
       }
+    }
+    return this;
+  };
+  /**
+   * 定时关闭
+   * @method time
+   * @param  {number} time       倒计时时间
+   * @return {this|jQueryElement}
+   */
+  VDialog.prototype.time = function(time) {
+    if (typeof time === 'number') {
+      this.options.time = time;
+      setTimeout(() => {
+        this.close();
+      }, time * 1000);
     }
     return this;
   };
@@ -457,6 +474,11 @@
    */
   VDialog.prototype.position = function() {
     var left, top, scrollSize, screenSize, dialogSize, el = document.documentElement || document.body;
+    if(this.options.left === 'auto') {
+      this.DOM.wrap.css({
+        left: 0,
+      });
+    }
     if (this.options.fixed) {
       scrollSize = {
         left: 0,
@@ -575,10 +597,10 @@
    * @return {this}
    */
   VDialog.prototype._top = function() {
-    vDialog.top = null;
+    vdialog.top = null;
     for (var i = cache.length - 1; i >= 0; i--) {
       if (cache[i].dialog._visible) {
-        vDialog.top = cache[i].dialog;
+        vdialog.top = cache[i].dialog;
         break;
       }
     }
@@ -591,7 +613,7 @@
    */
   VDialog.prototype._esc = function() {
     $(document).off('keydown.vDailog').on('keydown.vDailog', function(event) {
-      var dialog = vDialog.top,
+      var dialog = vdialog.top,
         target = event.target;
       if (!dialog || /^input|textarea$/i.test(target.nodeName) && target.type !== 'button') {
         return;
@@ -637,29 +659,29 @@
     return this;
   };
   /**
-   * --------------------------- vDialog --------------------------
+   * --------------------------- vdialog --------------------------
    */
   /**
-   * vDialog 实例
-   * @method vDialog
+   * vdialog 实例
+   * @method vdialog
    * @param  {Object} options 参数
-   * @return {vDialog}
+   * @return {vdialog}
    */
-  vDialog = function(options) {
+  vdialog = function(options) { // jshint ignore:line
     return new VDialog(options);
   };
-  vDialog.top = null;
-  vDialog._proxy = vDialog;
+  vdialog.top = null;
+  vdialog._proxy = vdialog;
 
   /**
-   * vDialog.alert
+   * vdialog.alert
    * @method alert
    * @param  {String}   content 提示内容
    * @param  {Object}   options 对话框配置信息
    * @param  {Function} fn      关闭对话框时，执行的回调
    * @return {this}
    */
-  vDialog.alert = function(content, options, fn) {
+  vdialog.alert = function(content, options, fn) {
     if (typeof options === 'function') {
       fn = options;
       options = {};
@@ -679,14 +701,14 @@
   };
 
   /**
-   * vDialog.success
+   * vdialog.success
    * @method success
    * @param  {String}   content 成功提示内容
    * @param  {Object}   options 对话框配置信息
    * @param  {Function} fn      关闭对话框时，执行的回调
    * @return {this}
    */
-  vDialog.success = function(content, options, fn) {
+  vdialog.success = function(content, options, fn) {
     if (typeof options === 'function') {
       fn = options;
       options = {};
@@ -706,14 +728,14 @@
   };
 
   /**
-   * vDialog.error
+   * vdialog.error
    * @method error
    * @param  {String}   content 错误提示内容
    * @param  {Object}   options 对话框配置信息
    * @param  {Function} fn      关闭对话框时，执行的回调
    * @return {this}
    */
-  vDialog.error = function(content, options, fn) {
+  vdialog.error = function(content, options, fn) {
     if (typeof options === 'function') {
       fn = options;
       options = {};
@@ -733,7 +755,7 @@
   };
 
   /**
-   * vDialog.confirm
+   * vdialog.confirm
    * @method confirm
    * @param  {String}   content 确认提示内容
    * @param  {Object}   options 对话框配置信息
@@ -741,7 +763,7 @@
    * @param  {Function} cancelFn      点击取消按钮时，执行的回调
    * @return {this}
    */
-  vDialog.confirm = function(content, options, okFn, cancelFn) {
+  vdialog.confirm = function(content, options, okFn, cancelFn) {
     if (typeof options === 'function') {
       cancelFn = okFn;
       okFn = options;
@@ -762,5 +784,5 @@
     }, options);
     return this._proxy(options);
   };
-  return vDialog;
+  return vdialog;
 }));

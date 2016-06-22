@@ -11,7 +11,6 @@
 /* vDialog 主样式 */
 .vdialog {
   position: absolute;
-  font-size: 14px;
   line-height: 1.5em;
   border-radius: 3px;
   -webkit-animation-duration: .3s;
@@ -219,5 +218,5 @@
   *padding-top: 1em;
 }
 .vdialog-modal {
-  *filter: alpha(opacity:60);
+  filter: alpha(opacity=60);
 }
