@@ -1,7 +1,7 @@
 /*!
  * vDialog v1.3.0
  * HTML5 based javascript dialog plugin
- * https://www.qque.com/vDialog
+ * https://www.qque.com/vdialog
  *
  * Copyright 2012-2015 pillys@163.com
  * Released under the MIT license
@@ -404,13 +404,14 @@
    * @return {this|jQueryElement}
    */
   VDialog.prototype.time = function(time) {
+    var that = this;
     if (typeof time === 'number') {
-      this.options.time = time;
-      setTimeout(() => {
-        this.close();
+      that.options.time = time;
+      setTimeout(function() {
+        that.close();
       }, time * 1000);
     }
-    return this;
+    return that;
   };
   /**
    * 设置对话框的宽度
