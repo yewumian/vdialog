@@ -1,4 +1,4 @@
-# vDialog v1.1
+# vdialog
 
   简单、易用、轻量级 js 对话框组件.
 
@@ -13,7 +13,7 @@
 ## 语法
 
 ```js
-vDialog({
+vdialog({
   title: '欢迎消息',
   content: '欢迎使用 vDialog 对话框组件！',
   ok: function(){
