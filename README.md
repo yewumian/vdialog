@@ -7,7 +7,7 @@
 ```html
 <link rel="stylesheet" href="./css/vdialog.css">
 <script src="./js/jquery-1.10.2.js"></script>
-<script src="./js/vDialog.min.js"></script>
+<script src="./js/vdialog.min.js"></script>
 ```
 
 ## 语法
@@ -50,7 +50,7 @@ vDialog({
   * top 对话框离页面上方的距离
 
 * 其他
-  
+  * time 通过 time 属性可以设置对话框一定时间后自动关闭，单位为“秒”
   * fixed 是否随屏滚动，默认为 false
   * modal 是否锁屏，默认为 false
   * esc 是否允许使用键盘“ESC”键退出
@@ -93,7 +93,7 @@ vDialog({
 
 ### 详细文档
 
-http://www.qque.com/vDialog
+http://vdialog.qque.com/
 
 
 ## License
