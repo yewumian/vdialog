@@ -2,7 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>vDialog</title>
+<title>vdialog</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
 <style>
 header{
   padding: 1em;
@@ -41,11 +45,18 @@ ul li {
 ul li a {
   color: #5cb85c;
 }
+
+@media screen and (max-width:800px) {
+  ul li{
+    float: none;
+    width: auto;
+  }
+}
 </style>
 </head>
 <body>
 <header>
-  <a href="http://www.qque.com/vDialog/"><img class="logo" src="./images/logo.png" alt="">vDialog<sup>v1.1</sup></a>
+  <a href="http://www.qque.com/vdialog/"><img class="logo" src="./images/logo.png" alt="">vdialog<sup>v1.3</sup></a>
 </header>
 <ul>
   <li><a href="./title.html">title 设置标题</a></li>
@@ -72,10 +83,10 @@ ul li a {
   <li><a href="./close-fn.html">close() 关闭对话框</a></li>
   <li><a href="./on.html">on() 事件绑定</a></li>
   <li><a href="./emit.html">emit() 事件触发</a></li>
-  <li><a href="./alert.html">vDialog.alert() alert对话框</a></li>
-  <li><a href="./confirm.html">vDialog.confirm() confirm对话框</a></li>
-  <li><a href="./success.html">vDialog.success() success对话框</a></li>
-  <li><a href="./error.html">vDialog.error() error对话框</a></li>
+  <li><a href="./alert.html">vdialog.alert() alert对话框</a></li>
+  <li><a href="./confirm.html">vdialog.confirm() confirm对话框</a></li>
+  <li><a href="./success.html">vdialog.success() success对话框</a></li>
+  <li><a href="./error.html">vdialog.error() error对话框</a></li>
   <li><a href="./seajs.html">for sea.js</a></li>
   <li><a href="./requirejs.html">for require.js</a></li>
 </ul>

@@ -2,7 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>vDialog</title>
+  <title>vdialog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no, email=no" />
   <link rel="stylesheet" href="../css/vdialog.css">
   <script src="../js/sea.js"></script>
 </head>
@@ -13,8 +17,8 @@ seajs.config({
     'jquery': 'lib/jquery-1.10.2'
   }
 });
-seajs.use(['lib/vDialog'],function (vDialog) {
-  vDialog.alert('Hello, vDialog for seaJs.');
+seajs.use(['lib/vdialog'],function (vdialog) {
+  vdialog.alert('Hello, vdialog for seaJs.');
 });
 //seajs.use(['../demo/js/seatest']);
 </script>

@@ -1,4 +1,4 @@
-define(['require', 'lib/vDialog'], function(require) {
-  var vDialog = require('lib/vDialog');
-  vDialog.alert('Hello, vDialog for requireJs.');
+define(['require', 'lib/vdialog'], function(require) {
+  var vdialog = require('lib/vdialog');
+  vdialog.alert('Hello, vdialog for requireJs.');
 });
