@@ -35,8 +35,7 @@
         <li><a href="#setup">引用方式</a>
           <ul>
             <li><a href="#setup-normal">常规引用</a>
-            <li><a href="#setup-seajs">seaJs</a>
-            <li><a href="#setup-requirejs">requireJs</a>
+            <li><a href="#setup-xmd">seaJs / requireJs</a>
           </ul>
         </li>
       </ul>
@@ -144,15 +143,10 @@
     <p>在页面的 <code>&lt;head&gt;</code> 标签内，引入 <code>jQuery</code> 及 <code>vdialog</code>：</p>
     <pre><code class="language-javascript">&lt;script src="./js/lib/jquery-1.10.2.js"&gt;&lt;/script&gt;
 &lt;script src="./js/lib/vdialog.js"&gt;&lt;/script&gt;</code></pre>
-    <h4 id="setup-seajs">For sea.js</h4>
+    <h4 id="setup-xmd">模块化：For sea.js / require.js</h4>
     <pre><code class="language-javascript">define(function(require, exports, module) {
   var vdialog = require('lib/vdialog');
-  vdialog.alert('Hello, vdialog for seaJs.');
-});</code></pre>
-    <h4 id="setup-requirejs">For require.js</h4>
-    <pre><code class="language-javascript">define(['require', 'lib/vdialog'], function(require) {
-  var vdialog = require('lib/vdialog');
-  vdialog.alert('Hello, vdialog for requireJs.');
+  vdialog.alert('Hello, vdialog for CMD/AMD.');
 });</code></pre>
   </section>
   <h2>示例</h2>
@@ -648,7 +642,7 @@ d.on('close', function(){
     <p>默认情况下，第一次创建的对话框不需要调用 <code>show()</code> 方法即可显示，所以该方法经常会省略。</p>
     <p>在一个对话框隐藏的情境下，调用 <code>show()</code> 方法会显示该对话框。</p>
     <p>若为 <code>show()</code> 方法传入参数 <code>anchor</code>，即代表该对话框将会在 DOM anchor 所在的位置下方出现</p>
-    <p>希望在本链接下面出现一个对话框 <a id="method-show-mark" href="javascript:;">这里</a></p>
+    <p>希望在本链接下面出现一个对话框 <a id="method-show-mark" href="javascript:;">运行下面代码，将会在本链接下方出现对话框</a></p>
     <pre><code class="language-javascript">vdialog({
   title: '欢迎',
   content: '我是一个优雅的 HTML5 对话框',

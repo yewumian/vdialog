@@ -422,6 +422,7 @@ $('#btn-method-show').on('click', function() {
   }).show();
 });
 $('#btn-method-show-anchor').on('click', function() {
+  console.log(1);
   vdialog({
     title: '欢迎',
     content: '我是一个优雅的 HTML5 对话框',
