@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>vdialog</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<base target="main">
+<style>
+header{
+  padding: 1em;
+  text-align: center;
+  font-size: 2em;
+}
+header a{
+  color: #333;
+  text-decoration: none;
+}
+header a sup{
+  font-size: .4em;
+  margin-left: .2em;
+}
+header .logo{
+  width: 40px;
+  vertical-align: middle;
+  margin-right: .2em;
+}
+ul {
+  max-width: 1000px;
+  margin: 50px auto;
+}
+ul:after {
+  content: '';
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  clear: both;
+}
+ul li {
+  line-height: 150%;
+}
+ul li a {
+  color: #5cb85c;
+}
+
+@media screen and (max-width:800px) {
+  body{
+    margin: 0;
+  }
+  header{
+    padding: 20px 0;
+  }
+  ul{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <a href="http://vdialog.qque.com/" target="_top"><img class="logo" src="./images/logo.png" alt="">vdialog<sup>v1.3</sup></a>
+</header>
+<ul>
+  <li><a href="./title.html">title 设置标题</a></li>
+  <li><a href="./title-hide.html">title 隐藏标题</a></li>
+  <li><a href="./content.html">content 内容</a></li>
+  <li><a href="./ok.html">ok 确定按钮事件</a></li>
+  <li><a href="./okValue.html">okValue 确定按钮文本</a></li>
+  <li><a href="./cancel.html">cancel 取消按钮事件</a></li>
+  <li><a href="./cancelValue.html">cancelValue 取消按钮文本</a></li>
+  <li><a href="./close.html">close 关闭对话框</a></li>
+  <li><a href="./close-hide.html">close 不显示关闭按钮</a></li>
+  <li><a href="./type.html">type 设置图标</a></li>
+  <li><a href="./size.html">width/height 设置尺寸</a></li>
+  <li><a href="./offset.html">left/top 设置位置</a></li>
+  <li><a href="./modal.html">modal 设置模态窗口</a></li>
+  <li><a href="./fixed.html">fixed 随屏滚动</a></li>
+  <li><a href="./esc.html">esc 取消ESC快捷键退出</a></li>
+  <li><a href="./init.html">init 初始化事件</a></li>
+  <li><a href="./top.html">top 顶层对话框</a></li>
+  <li><a href="./returnValue.html">returnValue 返回值</a></li>
+  <li><a href="./show.html">show() 显示对话框</a></li>
+  <li><a href="./hide.html">hide() 隐藏对话框</a></li>
+  <li><a href="./showModal.html">showModal() 显示模态对话框</a></li>
+  <li><a href="./close-fn.html">close() 关闭对话框</a></li>
+  <li><a href="./on.html">on() 事件绑定</a></li>
+  <li><a href="./emit.html">emit() 事件触发</a></li>
+  <li><a href="./alert.html">vdialog.alert() alert对话框</a></li>
+  <li><a href="./confirm.html">vdialog.confirm() confirm对话框</a></li>
+  <li><a href="./success.html">vdialog.success() success对话框</a></li>
+  <li><a href="./error.html">vdialog.error() error对话框</a></li>
+  <li><a href="./seajs.html">for sea.js</a></li>
+  <li><a href="./requirejs.html">for require.js</a></li>
+</ul>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?343e6d48bd41b663bdd92960ed183c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
