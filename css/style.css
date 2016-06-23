@@ -119,6 +119,9 @@ aside section ul, aside section ol {
 aside section:last-child {
   border-width: 0;
 }
+aside section a {
+  text-decoration: none;
+}
 .main {
   max-width: 1000px;
   margin: 50px auto 0;
@@ -141,6 +144,7 @@ aside section:last-child {
   border-radius: 3px;
   color: #333;
   text-decoration: none;
+  margin-right: 10px;
 }
 .main h2 {
   font-size: 16px;
@@ -150,6 +154,18 @@ aside section:last-child {
 }
 .main section:last-child {
   border-bottom-width: 0;
+}
+.main code {
+  border-bottom: 1px dotted #ccc;
+}
+.main pre code {
+  border-bottom: none;
+}
+.main .var-type {
+  margin: 0 10px;
+  color: #999;
+  font-size: .8em;
+  font-style: normal;
 }
 .main .changes time {
   color: #999;

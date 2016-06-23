@@ -6,23 +6,6 @@ $('#btn-index-1').on('click', function() {
     ok: true
   }).showModal();
 });
-$('#btn-index-2').on('click', function() {
-  vdialog()
-    .title('哈喽')
-    .type('alert')
-    .content('我给你变一个戏法吧')
-    .ok(function() {
-      this
-        .type('confirm')
-        .title('问一问')
-        .content('你的名字：<input type="text" data-returnable="true" />')
-        .ok(true)
-        .close(function() {
-          vdialog.alert('欢迎你，' + this.returnValue + '，我叫 vdialog');
-        });
-      return false;
-    });
-});
 
 /* 标题 */
 $('#btn-options-title-string').on('click', function() {
@@ -246,8 +229,8 @@ $('#btn-options-size-method').on('click', function() {
 });
 /* 对话框位置 */
 $('#btn-options-left-top').on('click', function() {
-  var _left = document.documentElement.scrollLeft,
-    _top = document.documentElement.scrollTop;
+  var _left = (document.body || document.documentElement).scrollLeft,
+    _top = (document.body || document.documentElement).scrollTop;
   vdialog({
     title: '欢迎',
     content: '我是一个优雅的 HTML5 对话框',
@@ -371,8 +354,8 @@ $('#btn-options-close-hide').on('click', function() {
 var propsTopDialogCount = 0,
   propsTopDialogIndex = 0;
 $('#btn-props-top-open').on('click', function() {
-  var left = document.documentElement.scrollLeft,
-    top = document.documentElement.scrollTop;
+  var left = (document.body || document.documentElement).scrollLeft,
+    top = (document.body || document.documentElement).scrollTop;
   propsTopDialogIndex++;
   propsTopDialogCount++;
   if (propsTopDialogIndex % 6 === 0) {
