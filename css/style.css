@@ -172,9 +172,47 @@ aside section a {
 }
 footer {
   color: #999;
-  padding: 0 20px;
+  padding: 0 40px;
   border-top: 1px solid #ccc;
   text-align: right;
+  position: relative;
+}
+footer .donate {
+  display: none;
+  position: absolute;
+  width: 100px;
+  bottom: 30px;
+  right: 40px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  padding: 2px;
+  background-color: #fff;
+  color: #666;
+  z-index: 100;
+}
+footer .donate:before, footer .donate:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+}
+footer .donate:before {
+  border-top-color: #ccc;
+}
+footer .donate:after {
+  bottom: -9px;
+  border-top-color: #fff;
+}
+footer .donate img {
+  width: 100px;
+  display: block;
+}
+footer:hover .donate {
+  display: block;
 }
 @media screen and (max-width:800px) {
   header {
