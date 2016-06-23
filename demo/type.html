@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>vdialog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <link rel="stylesheet" href="../css/vdialog.css">
+  <script src="../js/lib/jquery-1.10.2.js"></script>
+  <script src="../js/lib/vdialog.js"></script>
+</head>
+<body>
+<script>
+vdialog({
+  type: 'alert',
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  modal: true,
+  ok: true,
+  cancel: true
+});
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?343e6d48bd41b663bdd92960ed183c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

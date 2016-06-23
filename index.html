@@ -1,12 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>vDialog 简单、易用、轻量级对话框弹层组件</title>
+<title>vdialog 简单、易用、轻量级对话框弹层组件</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<link rel="stylesheet" href="./css/normalize.css">
+<link rel="stylesheet" href="./css/vdialog.css">
 <link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/highlight/prism.css">
+<script type="text/javascript" src="./js/highlight/prism.js"></script>
+<!--[if lt IE 9]><script type="text/javascript" src="./js/html5shiv.js"></script><![endif]-->
 </head>
 <body>
-<h1>vDialog</h1>
-<p><a href="http://www.qque.com/vdialog/">vDialog</a></p>
+<header>
+  <h1><a href="./index.html"><i class="vdialogwebfont">&#xe601;</i>vdialog<sup>v1.3</sup></a></h1>
+  <nav>
+    <ul>
+      <li><a href="./index.html">首页</a></li>
+      <li><a href="./download.html">下载</a></li>
+      <li><a href="./document.html">文档</a></li>
+      <li><a href="./demo/">演示</a></li>
+      <!--li><a href="./changes.html">升级日志</a></li-->
+    </ul>
+  </nav>
+</header>
+<article class="main">
+  <h2>基于HTML5 Dialog API的优雅对话框组件</h2>
+  <h4><i class="vdialogwebfont">&#xe600;</i> 为何而生？</h4>
+  <p>不久的将来，各大浏览器都会对 HTML5 的 <code>dialog</code> 标签给予支持，就目前来看，只有 <code>chrome</code> 做到了。但遗憾的是，即便这样，最终 <code>dialog</code> 呈现给用户的对话框，像是一个鸡肋：扩展性弱、界面不美观、易用性不高</p>
+  <p>HTML5 Dialog Element: <a href="http://www.w3.org/TR/2014/WD-html51-20140617/interactive-elements.html#the-dialog-element" target="_blank">http://www.w3.org/TR/2014/WD-html51-20140617/interactive-elements.html#the-dialog-element</a></p>
+  <p>非常庆幸，<code>vdialog</code> 可以在 HTML5 规范的指导下，完成类似的工作，并且做的优雅、漂亮！</p>
+  <p>vdialog 是在 HTML5 的基础上，对原生 <code>dialog</code> 标签的不足进行弥补和加强，而推出的一款轻量级 JavaScript 对话框弹层组件。</p>
+  <h4><i class="vdialogwebfont">&#xe600;</i> 轻量简单</h4>
+  <p>加上注释也不过几百行，压缩后仅仅 3k（gzip），<code>vdialog</code> 就是这样一个神奇的东西。</p>
+  <p>我们一起来看一下，<code>vdialog</code> 的简单之处在哪里呢？</p>
+  <pre><code class="language-javascript">vdialog({
+  title: '你好',
+  content: '我是一个脱俗的 vdialog 对话框',
+  ok: true
+}).showModal();</code></pre>
+  <p><a class="btn-run" id="btn-index-1" href="javascript:;">运行</a></p>
+  <p>你只需简单地配置几个属性，就能将一个体验极好的对话框展现给用户，是不是很容易上手呢？</p>
+  <h4><i class="vdialogwebfont">&#xe600;</i> 优雅极致</h4>
+  <p><code>vdialog</code> 就像马戏团的小演员一样，可以施展各种魔法，要怎么玩呢？</p>
+  <pre><code class="language-javascript">vdialog()
+  .title('哈喽')
+  .type('alert')
+  .content('我给你变一个戏法吧')
+  .ok(function() {
+    this
+      .type('confirm')
+      .title('问一问')
+      .content('你的名字：&lt;input type="text" data-returnable="true" /&gt;')
+      .ok(true)
+      .close(function() {
+        vdialog.alert('欢迎你，' + this.returnValue + '，我叫 vdialog');
+      });
+    return false;
+  });</code></pre>
+  <p><a class="btn-run" id="btn-index-2" href="javascript:;">运行</a></p>
+  <p>怎么样？虽然这么多方法看起来有些不舒服，但一个对话框组件的链式结构能做到如此极致，也正式它的强大所在。</p>
+  <h4><i class="vdialogwebfont">&#xe600;</i> 开放神秘</h4>
+  <p><code>vdialog</code> 遵循（开源协议中最宽松的）<a href="https://github.com/pillys/vdialog/blob/master/LICENSE" target="_blank">MIT</a> 协议，可以根据你的需要任意使用、修改、传播，记得好好爱它。</p>
+  <p><code>vdialog</code> 有许多奥妙之处，它的优雅，取决于你的玩法，等你逐个发现，即便是第一个版本，也足以能够证明它的成熟。</p>
+  <p>现在已给足你喜欢它的理由，如果你感觉 <code>vdialog</code> 有意思，赶紧开始上手并应用于你的项目中吧！</p>
+</article>
+<footer>
+  <p>&copy; 2012 - 2016 qque.com by pillys</p>
+</footer>
+<script src="./js/lib/jquery-1.10.2.js"></script>
+<script src="./js/lib/vdialog.min.js"></script>
+<script src="./js/example.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?343e6d48bd41b663bdd92960ed183c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </body>
 </html>

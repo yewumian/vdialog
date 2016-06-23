@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>vdialog 简单、易用、轻量级对话框弹层组件</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<link rel="stylesheet" href="./css/normalize.css">
+<link rel="stylesheet" href="./css/vdialog.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/highlight/prism.css">
+<script type="text/javascript" src="./js/highlight/prism.js"></script>
+<!--[if lt IE 9]><script type="text/javascript" src="./js/html5shiv.js"></script><![endif]-->
+</head>
+<body>
+<header>
+  <h1><a href="./index.html"><i class="vdialogwebfont">&#xe601;</i>vdialog<sup>v1.3</sup></a></h1>
+  <nav>
+    <ul>
+      <li><a href="./index.html">首页</a></li>
+      <li><a href="./download.html">下载</a></li>
+      <li><a href="./document.html">文档</a></li>
+      <li><a href="./demo/">演示</a></li>
+      <!--li><a href="./changes.html">升级日志</a></li-->
+    </ul>
+  </nav>
+</header>
+<aside>
+  <div class="list">
+    <section>
+      <h2>引用</h2>
+      <ul>
+        <li><a href="#setup">引用方式</a>
+          <ul>
+            <li><a href="#setup-normal">常规引用</a>
+            <li><a href="#setup-seajs">seaJs</a>
+            <li><a href="#setup-requirejs">requireJs</a>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>选项</h2>
+      <ul class="api-doc">
+        <li>内容
+          <ul>
+            <li><a href="#options-title">title</a><em>Boolean | String</em><span>对话框标题，默认为“提示信息”</span></li>
+            <li><a href="#options-content">content</a><em>String | HTMLElement | jQueryElement</em><span>对话框内容</span></li>
+          </ul>
+        </li>
+        <li>
+          按钮
+          <ul>
+            <li><a href="#options-ok">ok</a><em>Boolean | Function</em><span>点击确定按钮执行的方法</span></li>
+            <li><a href="#options-okValue">okValue</a><em>String</em><span>确认按钮的文本，默认为“确定”</span></li>
+            <li><a href="#options-cancel">cancel</a><em>Boolean | Function</em><span>点击取消按钮执行的方法</span></li>
+            <li><a href="#options-cancelValue">cancelValue</a><em>String</em><span>取消按钮的文本，默认为“取消”</span></li>
+            <li><a href="#options-close">close</a><em>Boolean | Function</em><span>点击右上角关闭按钮执行的方法</span></li>
+          </ul>
+        </li>
+        <li>
+          外观
+          <ul>
+            <li><a href="#options-type">type</a><em>String</em><span>对话框类型（图标）</span>
+              <ul>
+                <li>alert</li>
+                <li>success</li>
+                <li>error</li>
+                <li>confirm</li>
+              </ul>
+            </li>
+            <li><a href="#options-size">width</a><em>Number | String</em><span>对话框宽度，可以使用数字或百分比表示</span></li>
+            <li><a href="#options-size">height</a><em>Number | String</em><span>对话框高度，可以使用数字或百分比表示</span></li>
+            <li><a href="#options-left-top">left</a><em>Number</em><span>对话框离页面左侧的距离</span></li>
+            <li><a href="#options-left-top">top</a><em>Number</em><span>对话框离页面上方的距离</span></li>
+          </ul>
+        </li>
+        <li>其他
+          <ul>
+            <li><a href="#options-modal">modal</a><em>Boolean</em><span>是否锁屏，默认为 false</span></li>
+            <li><a href="#options-time">time</a><em>Number</em><span>定时关闭弹框</span></li>
+            <li><a href="#options-fixed">fixed</a><em>Boolean</em><span>是否随屏滚动，默认为 false</span></li>
+            <li><a href="#options-esc">esc</a><em>Boolean</em><span>是否允许使用键盘“ESC”键退出</span></li>
+            <li><a href="#options-init">init</a><em>Boolean | Function</em><span>初始化对话框后执行的事件</span></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>属性</h2>
+      <ul class="api-doc">
+        <li><a href="#props-top">top</a><em>vdialog</em><span>顶层对话框</span></li>
+        <li><a href="#props-returnValue">returnValue</a><em>Any</em><span>对话框关闭或退出时的返回值</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>方法</h2>
+      <ul class="api-doc">
+        <li><a href="#options-title">title()</a><em>method</em><span>读取或设置对话框标题</span></li>
+        <li><a href="#options-content">content()</a><em>method</em><span>读取或这只对话框内容</span></li>
+        <li><a href="#options-ok">ok()</a><em>method</em><span>设置或执行确定按钮事件</span></li>
+        <li><a href="#options-cancel">cancel()</a><em>method</em><span>设置或执行取消按钮事件</span></li>
+        <li><a href="#method-show">show()</a><em>method</em><span>显示对话框</span></li>
+        <li><a href="#method-showModal">showModal()</a><em>method</em><span>显示模态对话框</span></li>
+        <li><a href="#method-hide">hide()</a><em>method</em><span>隐藏对话框</span></li>
+        <li><a href="#options-close">close()</a><em>method</em><span>设置关闭窗口事件或关闭窗口</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>事件</h2>
+      <ul class="api-doc">
+        <li><a href="#event-on">on</a><em>method</em><span>监听事件</span>
+          <ul>
+            <li>show</li>
+            <li>hide</li>
+            <li>close</li>
+            <li>cancel</li>
+          </ul>
+        </li>
+        <li><a href="#event-emit">emit</a><em>method</em><span>执行自定义事件</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>其他方法</h2>
+      <ul class="api-doc">
+        <li><a href="#others-alert">vdialog.alert()</a><em>method</em><span>显示一个带有提醒图标的对话框</span></li>
+        <li><a href="#others-success">vdialog.success()</a><em>method</em><span>显示一个带有成功图标的对话框</span></li>
+        <li><a href="#others-error">vdialog.error()</a><em>method</em><span>显示一个带有失败图标的对话框</span></li>
+        <li><a href="#others-confirm">vdialog.confirm()</a><em>method</em><span>显示一个带有确认图标的对话框</span></li>
+      </ul>
+    </section>
+  </div>
+</aside>
+<div class="main main-toggle">
+  <h2>引用</h2>
+  <section id="setup">
+    <p><code>vdialog</code> 是一款基于 <code>jQuery</code> 的免费开源插件，<code>jQuery</code> 最低版本要求：<code>1.7.1++</code></p>
+    <p>首先，在页面的 <code>&lt;head&gt;</code> 标签内，引入 <code>vdialog</code> 的样式文件：</p>
+    <pre><code class="language-javascript">&lt;link rel="stylesheet" href="./css/vdialog.css"&gt;</code></pre>
+    <p>根据自己的需要，用下面三种方式引入 <code>vdialog</code>：</p>
+    <h4 id="setup-normal">常规引用：</h4>
+    <p>在页面的 <code>&lt;head&gt;</code> 标签内，引入 <code>jQuery</code> 及 <code>vdialog</code>：</p>
+    <pre><code class="language-javascript">&lt;script src="./js/lib/jquery-1.10.2.js"&gt;&lt;/script&gt;
+&lt;script src="./js/lib/vdialog.js"&gt;&lt;/script&gt;</code></pre>
+    <h4 id="setup-seajs">For sea.js</h4>
+    <pre><code class="language-javascript">define(function(require, exports, module) {
+  var vdialog = require('lib/vdialog');
+  vdialog.alert('Hello, vdialog for seaJs.');
+});</code></pre>
+    <h4 id="setup-requirejs">For require.js</h4>
+    <pre><code class="language-javascript">define(['require', 'lib/vdialog'], function(require) {
+  var vdialog = require('lib/vdialog');
+  vdialog.alert('Hello, vdialog for requireJs.');
+});</code></pre>
+  </section>
+  <h2>示例</h2>
+  <section>
+    <h4 id="options-title"><i class="vdialogwebfont">&#xe600;</i> title 对话框标题</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>默认情况下，对话框的标题为“提示信息”，若要显示为自定义的标题，请修改该属性为对应的字符串：</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎'
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-title-string" href="javascript:;">运行</a></p>
+    
+    <p>若要隐藏标题栏，请设置该属性为 <code>false</code></p>
+    <pre><code class="language-javascript">vdialog({
+  title: false,
+  content: '这是一个没有标题的 vdialog'
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-title-false" href="javascript:;">运行</a></p>
+    
+    <p>你还可以通过 <code>title()</code> 方法来读取或者设置标题</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎'
+});
+// 改变 title
+d.title('快看，我变了');
+// 隐藏 title
+d.title(false);
+// 显示 title
+d.title(true).title('快看，我又变了');
+// 获取 title
+alert(d.title());
+</code></pre>
+    <p><a class="btn-run" id="btn-options-title-get" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-content"><i class="vdialogwebfont">&#xe600;</i> content 对话框内容</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>设置对话框内容</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框'
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-content" href="javascript:;">运行</a></p>
+    
+    <p>读取对话框内容</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框'
+});
+alert(d.content().html());</code></pre>
+    <p><a class="btn-run" id="btn-options-content-get" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-ok"><i class="vdialogwebfont">&#xe600;</i> ok “确定”按钮事件</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>点击确定按钮，执行指定的回调</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: function(){
+    alert('你点了确定按钮');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-ok" href="javascript:;">运行</a></p>
+    
+    <p>显示确定按钮，点击该按钮关闭对话框</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-ok-true" href="javascript:;">运行</a></p>
+    
+    <p>点击确定按钮，对话框不关闭</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: function(){
+    return false;
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-ok-fn-false" href="javascript:;">运行</a></p>
+    
+    <p>设置确定按钮事件</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框'
+}).ok(function(){
+  alert('你点了确定按钮');
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-ok-fn-method" href="javascript:;">运行</a></p>
+    
+    <p>模拟点击确定按钮</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: function(){
+    alert('你点了确定按钮');
+  }
+});
+d.ok();</code></pre>
+    <p><a class="btn-run" id="btn-options-ok-fn-method-ok" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-okValue"><i class="vdialogwebfont">&#xe600;</i> okValue “确定”按钮文本</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  okValue: '我知道了',
+  ok: function(){
+    alert('你点了确定按钮');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-okValue" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-cancel"><i class="vdialogwebfont">&#xe600;</i> cancel “取消”按钮事件</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>点击取消按钮，执行指定的回调</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: function(){
+    alert('你点了取消按钮');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-cancel" href="javascript:;">运行</a></p>
+    
+    <p>显示取消按钮，点击该按钮关闭对话框</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-cancel-true" href="javascript:;">运行</a></p>
+    
+    <p>点击取消按钮，对话框不关闭</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: function(){
+    return false;
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-cancel-fn-false" href="javascript:;">运行</a></p>
+    
+    <p>设置取消按钮事件</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true
+}).cancel(function(){
+  alert('你点了取消按钮');
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-cancel-fn-method" href="javascript:;">运行</a></p>
+    
+    <p>模拟点击取消按钮</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: function(){
+    alert('你点了取消按钮');
+  }
+});
+d.cancel();</code></pre>
+    <p><a class="btn-run" id="btn-options-cancel-fn-method-cancel" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-cancelValue"><i class="vdialogwebfont">&#xe600;</i> cancelValue “取消”按钮文本</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancelValue: '我不需要',
+  cancel: function(){
+    alert('你点了取消按钮');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-cancelValue" href="javascript:;">运行</a></p>
+  </section>
+  
+  <section>
+    <h4 id="options-close"><i class="vdialogwebfont">&#xe600;</i> close 关闭对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+      <li>事件</li>
+    </ul>
+    <p>设置关闭对话框时执行的方法</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true,
+  close: function(){
+    alert('你关闭了对话框');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-close" href="javascript:;">运行</a></p>
+
+    <p>通过方法设置关闭事件</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true
+}).close(function(){
+  alert('你关闭了对话框');
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-close-fn" href="javascript:;">运行</a></p>
+
+    <p>关闭对话框</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true,
+  close: function(){
+    alert('你关闭了对话框');
+  }
+});
+d.close();</code></pre>
+    <p><a class="btn-run" id="btn-options-close-fn-method" href="javascript:;">运行</a></p>
+  
+    <p>不显示右上角关闭按钮</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true,
+  close: false
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-close-hide" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-type"><i class="vdialogwebfont">&#xe600;</i> type 对话框类型（图标）</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>通过 <code>type</code> 可以设置对话框的类型，通常表现为图标显示不一样，可用值有：</p>
+    <ul>
+      <li>alert</li>
+      <li>success</li>
+      <li>error</li>
+      <li>confirm</li>
+    </ul>
+    <pre><code class="language-javascript">vdialog({
+  type: 'alert',
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  modal: true,
+  ok: true,
+  cancel: true
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-type" href="javascript:;">运行</a></p>
+    <p>下面分别展示各种图标样式</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  modal: true,
+  ok: true,
+  cancel: true
+});
+d.type('alert').content('我是提示信息！');
+d.type('success').content('恭喜：操作成功！');
+d.type('error').content('操作失败，服务器忙！');
+d.type('confirm').content('你确定要删除该条记录吗？');</code></pre>
+    <p><a class="btn-run" id="btn-options-type-list" href="javascript:;">运行</a></p>
+    <p>除了通过设置 <code>type</code> 属性、调用 <code>type</code> 方法来设置对话框样式之外，还可以通过 <code>vdialog.alert()</code>、<code>vdialog.success()</code>、<code>vdialog.error()</code>、<code>vdialog.confirm()</code> 方法来实现，详情请阅读 <a href="#others-alert">其他</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-size"><i class="vdialogwebfont">&#xe600;</i> width / height 对话框尺寸</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>通过 <code>width</code>、<code>height</code> 可以读取或者设置对话框的尺寸，可以使用“数字”、“百分比”或字符串“auto”来表示</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  width: 300,
+  height: 200
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-size" href="javascript:;">运行</a></p>
+    <p>通过方法设置</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).width(400).height(100);</code></pre>
+    <p><a class="btn-run" id="btn-options-size-method" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-left-top"><i class="vdialogwebfont">&#xe600;</i> 设置对话框位置</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>通过 left、top 可以读取或者设置对话框的位置，可以使用“数字”、“百分比”或字符串“auto”来表示</p>
+    <pre><code class="language-javascript">var _left = document.documentElement.scrollLeft,
+  _top = document.documentElement.scrollTop;
+vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  left: _left + 300,
+  top: _top + 200
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-left-top" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-modal"><i class="vdialogwebfont">&#xe600;</i> modal 设置模态对话框（锁屏）</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>通过 <code>modal</code> 属性可以设置模态窗口（锁屏）</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-modal" href="javascript:;">运行</a></p>
+    <p>除了通过参数设置 <code>modal</code> 属性来控制对话框是否锁屏，还可以通过 <code>showModal()</code> 方法，实现的功效是一样的，参考：<a href="#method-showModal">showModal()</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-time"><i class="vdialogwebfont">&#xe600;</i> time 定时关闭</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>通过 <code>time</code> 属性可以设置对话框一定时间后自动关闭，单位为“秒”</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  time: 3
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-time" href="javascript:;">运行</a></p>
+    <p>通过方法设置：</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).time(3);</code></pre>
+    <p><a class="btn-run" id="btn-options-time-method" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-fixed"><i class="vdialogwebfont">&#xe600;</i> fixed 随屏滚动</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>通过 <code>fixed</code> 属性可以设置对话框是否随屏滚动，默认为 <code>false</code></p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  fixed: true
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-fixed" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-esc"><i class="vdialogwebfont">&#xe600;</i> esc ESC键退出对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>默认状态下，<code>vdialog</code> 能够通过键盘上得“ESC”键快捷退出，如果你想禁用该功能，请设置 <code>esc</code> 参数为 <code>false</code></p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true,
+  esc: false
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-esc" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="options-init"><i class="vdialogwebfont">&#xe600;</i> init 初始化对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>在 <code>vdialog</code> 创建好对话框之后，会触发 <code>init</code> 事件，该事件总是发生在 <code>show</code> 之前，并且只会发生一次</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  init: function(){
+    alert('vdialog inited.');
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-options-init" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="props-top"><i class="vdialogwebfont">&#xe600;</i> 获取打开的最顶层对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>获取最顶层的对话框，并且关闭它</p>
+    <pre><code class="language-javascript">vdialog.top.close();</code></pre>
+    <p><a class="btn-run" id="btn-props-top-open" href="javascript:;">多次点我，打开多个对话框</a><a class="btn-run" id="btn-props-top-close" href="javascript:;">关闭顶层对话框</a></p>
+  </section>
+  
+  <section>
+    <h4 id="props-returnValue"><i class="vdialogwebfont">&#xe600;</i> 关闭对话框时，获取返回值 <code>returnValue</code></h4>
+    <ul class="props-intro">
+      <li>属性</li>
+    </ul>
+    <p>给内容中的某个 <code>表单元素</code> 设置 <code>data-returnable="true"</code> 属性，可以告诉对话框当关闭对话框时的返回值，对话框只返回设置了该属性的表单元素值</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '您的姓名：&lt;input type="text" data-returnable="true" /&gt;',
+  ok: true,
+  cancel: true,
+  close: function(){
+    alert(this.returnValue);
+  }
+});</code></pre>
+    <p><a class="btn-run" id="btn-props-returnValue" href="javascript:;">运行</a></p>
+    <p>由于 <code>close</code> 是一内置事件（参考：<a href="#event-on">事件</a>），因此下面的代码，也能达到相同的功效：</p>
+    <pre><code class="language-javascript">var d = vdialog(...);
+d.on('close', function(){
+  alert(this.returnValue);
+});</code></pre>
+    <p><a class="btn-run" id="btn-props-returnValue-on" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="method-show"><i class="vdialogwebfont">&#xe600;</i> show 显示对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+      <li>事件</li>
+    </ul>
+    <p>通过 <code>show</code> 方法可以显示一个对话框</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).show();</code></pre>
+    <p><a class="btn-run" id="btn-method-show" href="javascript:;">运行</a></p>
+    <p>默认情况下，第一次创建的对话框不需要调用 <code>show()</code> 方法即可显示，所以该方法经常会省略。</p>
+    <p>在一个对话框隐藏的情境下，调用 <code>show()</code> 方法会显示该对话框。</p>
+    <p>若为 <code>show()</code> 方法传入参数 <code>anchor</code>，即代表该对话框将会在 DOM anchor 所在的位置下方出现</p>
+    <p>希望在本链接下面出现一个对话框 <a id="method-show-mark" href="javascript:;">这里</a></p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).show(document.getElementById('method-show-mark'));</code></pre>
+    <p><a class="btn-run" id="btn-method-show-anchor" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="method-showModal"><i class="vdialogwebfont">&#xe600;</i> showModal 设置模态对话框（锁屏）</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+    </ul>
+    <p>通过 <code>showModal</code> 方法可以设置模态窗口（锁屏）</p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).showModal();</code></pre>
+    <p><a class="btn-run" id="btn-method-showmodal" href="javascript:;">运行</a></p>
+    <p>除了通过方法 <code>showModal</code> 来控制对话框是否锁屏，还可以通过 <code>modal</code> 属性，实现的功效是一样的，参考：<a href="#options-modal">modal</a></p>
+    <p>若为 <code>showModal()</code> 方法传入参数 <code>anchor</code>，即代表该对话框将会在 DOM anchor 所在的位置下方出现</p>
+    <p>希望在本链接下面出现一个对话框 <a id="method-showmodal-mark" href="javascript:;">这里</a></p>
+    <pre><code class="language-javascript">vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true
+}).showModal(document.getElementById('method-showmodal-mark'));</code></pre>
+    <p><a class="btn-run" id="btn-method-showmodal-anchor" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="method-hide"><i class="vdialogwebfont">&#xe600;</i> hide 隐藏（但不销毁）对话框</h4>
+    <ul class="props-intro">
+      <li>属性</li>
+      <li>方法</li>
+      <li>事件</li>
+    </ul>
+    <p>通过 <code>hide</code> 方法可以隐藏一个对话框，不同于 <code>close</code> 方法，<code>hide</code> 操作后的对话框还在文档中，只是变成不可见而已，而 <code>close</code> 操作过的对话框将会从文档中彻底销毁</p>
+    <pre><code class="language-javascript">var d = vdialog(...);
+d.show();
+d.hide();</code></pre>
+    <p><a class="btn-run" id="btn-method-hide" href="javascript:;">运行</a><a class="btn-run" id="btn-method-hide-hide" href="javascript:;">隐藏</a><a class="btn-run" id="btn-method-hide-show" href="javascript:;">显示</a></p>
+  </section>
+
+  <section>
+    <h4 id="event-on"><i class="vdialogwebfont">&#xe600;</i> on 事件监听</h4>
+    <ul class="props-intro">
+      <li>事件</li>
+    </ul>
+    <p>通过 <code>on</code>，可以监听各种事件，常见的事件有：</p>
+    <ul>
+      <li>show</li>
+      <li>hide</li>
+      <li>close</li>
+      <li>cancel</li>
+    </ul>
+    <p>下面是一个监听 <code>close</code> 事件的例子：</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true
+});
+d.on('close', function(){
+  alert('你关闭了对话框');
+});</code></pre>
+    <p><a class="btn-run" id="btn-event-on-close" href="javascript:;">运行</a></p>
+    <p>从上面的演示可以看到，事件监听和前面涉及到的一些方法是类似的，例如上面的事件监听可以通过方法来做到：</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: true,
+  cancel: true,
+  modal: true
+});
+d.close(function(){
+  alert('你关闭了对话框');
+});</code></pre>
+    <p><a class="btn-run" id="btn-event-on-close-fn" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="event-emit"><i class="vdialogwebfont">&#xe600;</i> emit 事件执行</h4>
+    <ul class="props-intro">
+      <li>事件</li>
+    </ul>
+    <p><code>on</code> 方法除了能够监听常规的事件之外，还可以创建一个自定义事件监听器：</p>
+    <pre><code class="language-javascript">var d = vdialog(...);
+d.on('myEvent', function(){
+  alert('这是一个自己定义的事件 myEvent');
+});</code></pre>
+    <p>通过 <code>emit</code>，可以执行正在监听的事件：</p>
+    <p>下面是一个执行监听事件的例子：</p>
+    <pre><code class="language-javascript">var d = vdialog({
+  title: '欢迎',
+  content: '我是一个优雅的 HTML5 对话框',
+  ok: function(){
+    alert(this.content().html());
+    this.emit('myEvent');
+  }
+});
+d.on('myEvent', function(){
+  alert('这是一个自己定义的事件 myEvent');
+});</code></pre>
+    <p><a class="btn-run" id="btn-event-emit" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="others-alert"><i class="vdialogwebfont">&#xe600;</i> vdialog.alert() 弹出 alert 对话框</h4>
+    <p>语法：<code>vdialog.alert(content[, options][, callback]);</code></p>
+    <p>为了使用方便，你可以直接调用 <code>vdialog.alert()</code> 方法，来弹出 <code>alert</code> 类型的对话框</p>
+    <pre><code class="language-javascript">vdialog.alert('我是一个优雅的 HTML5 对话框');</code></pre>
+    <p><a class="btn-run" id="btn-others-alert" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="others-success"><i class="vdialogwebfont">&#xe600;</i> vdialog.success() 弹出 success 对话框</h4>
+    <p>语法：<code>vdialog.success(content[, options][, callback]);</code></p>
+    <p>为了使用方便，你可以直接调用 <code>vdialog.success()</code> 方法，来弹出 <code>success</code> 类型的对话框</p>
+    <pre><code class="language-javascript">vdialog.success('恭喜：操作成功！');</code></pre>
+    <p><a class="btn-run" id="btn-others-success" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="others-error"><i class="vdialogwebfont">&#xe600;</i> vdialog.error() 弹出 error 对话框</h4>
+    <p>语法：<code>vdialog.error(content[, options][, callback]);</code></p>
+    <p>为了使用方便，你可以直接调用 <code>vdialog.error()</code> 方法，来弹出 <code>error</code> 类型的对话框</p>
+    <pre><code class="language-javascript">vdialog.error('操作失败，服务器忙！');</code></pre>
+    <p><a class="btn-run" id="btn-others-error" href="javascript:;">运行</a></p>
+  </section>
+
+  <section>
+    <h4 id="others-confirm"><i class="vdialogwebfont">&#xe600;</i> vdialog.confirm() 弹出 confirm 对话框</h4>
+    <p>语法：<code>vdialog.confirm(content[, options][, okCallback][, cancelCallback]);</code></p>
+    <p>为了使用方便，你可以直接调用 <code>vdialog.confirm()</code> 方法，来弹出 <code>confirm</code> 类型的对话框</p>
+    <pre><code class="language-javascript">vdialog.confirm('你确定要删除该条记录吗？', function(){
+  alert('你点了确定按钮');
+});</code></pre>
+    <p><a class="btn-run" id="btn-others-confirm" href="javascript:;">运行</a></p>
+  </section>
+</div>
+<footer>
+  <p>&copy; 2012 - 2016 qque.com by pillys</p>
+</footer>
+<script src="./js/lib/jquery-1.10.2.js"></script>
+<script src="./js/lib/vdialog.min.js"></script>
+<script src="./js/example.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?343e6d48bd41b663bdd92960ed183c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
