@@ -179,6 +179,12 @@ footer {
     width: auto;
     border-right-width: 0;
   }
+  aside .list {
+    padding-top: 10px;
+  }
+  .main {
+    margin-top: 0;
+  }
   .main-toggle {
     margin-left: auto;
   }
