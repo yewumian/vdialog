@@ -404,10 +404,9 @@
       returnDom;
     if (fn !== undefined) {
       this.options.close = fn;
-      if (this.options.close === false) {
-        this.DOM.close.hide();
-      } else {
-        this.DOM.close.show();
+      if(this.options.close === false) {
+        this.options.fire = this.options.close;
+        this.fire(this.options.fire);
       }
     } else {
       returnDom = this.DOM.wrap.find('[data-returnable="true"]');
