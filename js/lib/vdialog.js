@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.4.0
+ * vDialog v1.4.1
  * HTML5 based javascript dialog plugin
  * https://vdialog.qque.com
  *
@@ -63,7 +63,7 @@
   var mobile = /(iPhone|iPod|Android|ios)/i.test(navigator.userAgent);
 
   function VDialog(options) {
-    this.version = '1.4.0';
+    this.version = '1.4.1';
     this.options = $.extend({
       id: '',
       type: '',
@@ -85,7 +85,7 @@
       left: 'auto',
       top: 'auto',
       padding: 'auto',
-      direction: 'ltr' // ltr | rtl
+      direction: 'rtl' // ltr | rtl
     }, options);
     this._eventQueue = {};
     this._visible = true;
@@ -357,9 +357,9 @@
       buttonDom = footer.find('a.vd-btn[data-name="' + button.name + '"]');
       newButtonDom = $('<a data-name="' + button.name + '" class="vd-btn vd-btn-' + button.className + '" href="javascript:;">' + button.text + '</a>');
       if (buttonDom.length === 0) {
-        if(this.options.direction === 'ltr') {
+        if(this.options.direction === 'rtl') {
           footer.prepend(newButtonDom);
-        } else if(this.options.direction === 'rtl') {
+        } else if(this.options.direction === 'ltr') {
           footer.append(newButtonDom);
         }
       } else {
