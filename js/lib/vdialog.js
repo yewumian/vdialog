@@ -1,9 +1,9 @@
 /*!
- * vDialog v1.3.0
+ * vDialog v1.4.0
  * HTML5 based javascript dialog plugin
- * https://www.qque.com/vdialog
+ * https://vdialog.qque.com
  *
- * Copyright 2012-2015 pillys@163.com
+ * Copyright 2012-2016 pillys@163.com
  * Released under the MIT license
  */
 
@@ -60,9 +60,10 @@
     '  </div>' +
     '  <div class="vd-footer"></div>' +
     '</div>';
+  var mobile = /(iPhone|iPod|Android|ios)/i.test(navigator.userAgent);
 
   function VDialog(options) {
-    this.version = '1.3.0';
+    this.version = '1.4.0';
     this.options = $.extend({
       id: '',
       type: '',
@@ -76,13 +77,15 @@
       modal: false,
       fixed: false,
       close: null,
+      fire: !mobile,
       esc: true,
       time: false,
       width: 'auto',
       height: 'auto',
       left: 'auto',
       top: 'auto',
-      padding: 'auto'
+      padding: 'auto',
+      direction: 'ltr' // ltr | rtl
     }, options);
     this._eventQueue = {};
     this._visible = true;
@@ -123,8 +126,10 @@
     this.ok(this.options.ok);
     // 取消按钮
     this.cancel(this.options.cancel);
-    // 关闭按钮
+    // 关闭事件
     this.close(this.options.close);
+    // 关闭按钮
+    this.fire(this.options.fire);
     // 定时关闭
     this.time(this.options.time);
     // 尺寸
@@ -165,6 +170,7 @@
       wrap = this.DOM.wrap;
     // 关闭事件
     this.DOM.close.on('click', function() {
+      that.fire();
       that.close();
     });
     // 外层
@@ -351,7 +357,11 @@
       buttonDom = footer.find('a.vd-btn[data-name="' + button.name + '"]');
       newButtonDom = $('<a data-name="' + button.name + '" class="vd-btn vd-btn-' + button.className + '" href="javascript:;">' + button.text + '</a>');
       if (buttonDom.length === 0) {
-        footer.prepend(newButtonDom);
+        if(this.options.direction === 'ltr') {
+          footer.prepend(newButtonDom);
+        } else if(this.options.direction === 'rtl') {
+          footer.append(newButtonDom);
+        }
       } else {
         buttonDom.replaceWith(newButtonDom);
       }
@@ -360,8 +370,31 @@
       return this;
     }
   };
+
   /**
-   * 关闭对话框
+   * 是否显示关闭按钮，及关闭按钮事件
+   * @method fire
+   * @param  {Function} fn 点击关闭按钮时执行的回调
+   * @return {this}
+   */
+  VDialog.prototype.fire = function(fn) {
+    if (fn !== undefined) {
+      this.options.fire = fn;
+      if (this.options.fire === false) {
+        this.DOM.close.hide();
+      } else {
+        this.DOM.close.show();
+      }
+    } else {
+      if(typeof this.options.fire === 'function') {
+        this.options.fire.call(this);
+      }
+    }
+    return this;
+  };
+
+  /**
+   * 关闭对话框事件
    * @method close
    * @param  {Function} fn 关闭时执行的回调
    * @return {this}
@@ -512,7 +545,7 @@
       left = this.options.left;
     }
     if (this.options.top === 'auto') {
-      top = scrollSize.top + Math.max(10, (screenSize.height - dialogSize.height) / 3);
+      top = scrollSize.top + Math.max(10, (screenSize.height - dialogSize.height) / (mobile ? 2 : 3));
     } else {
       top = this.options.top;
     }
@@ -688,11 +721,12 @@
       options = {};
     }
     options = $.extend({
-      type: 'alert',
+      type: mobile ? '' : 'alert',
       title: '提示信息',
       content: content,
       modal: true,
       fixed: true,
+      fire: !mobile,
       ok: true,
       close: function() {
         fn && fn.call(this);
@@ -715,11 +749,12 @@
       options = {};
     }
     options = $.extend({
-      type: 'success',
+      type: mobile ? '' : 'success',
       title: '成功提示',
       content: content,
       modal: true,
       fixed: true,
+      fire: !mobile,
       ok: true,
       close: function() {
         fn && fn.call(this);
@@ -742,11 +777,12 @@
       options = {};
     }
     options = $.extend({
-      type: 'error',
+      type: mobile ? '' : 'error',
       title: '错误提示',
       content: content,
       modal: true,
       fixed: true,
+      fire: !mobile,
       ok: true,
       close: function() {
         fn && fn.call(this);
@@ -771,11 +807,12 @@
       options = {};
     }
     options = $.extend({
-      type: 'confirm',
+      type: mobile ? '' : 'confirm',
       title: '确认信息',
       content: content,
       modal: true,
       fixed: true,
+      fire: !mobile,
       ok: function() {
         okFn && okFn.call(this);
       },

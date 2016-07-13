@@ -1,4 +1,4 @@
-/* vDialog 图标字体 */
+/* vdialog 图标字体 */
 @font-face {
   font-family: 'vdfont';
   src: url('../fonts/vdfont.eot'); /* IE9*/
@@ -8,7 +8,7 @@
   url('../fonts/vdfont.svg#vdfont') format('svg'); /* iOS 4.1- */
 }
 
-/* vDialog 主样式 */
+/* vdialog 主样式 */
 .vdialog {
   position: absolute;
   line-height: 1.5em;
@@ -17,13 +17,13 @@
   animation-duration: .3s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  -webkit-animation-name: vDialogZoomIn;
-  animation-name: vDialogZoomIn;
+  -webkit-animation-name: vdialogZoomIn;
+  animation-name: vdialogZoomIn;
 }
 .vdialog-fixed {
   position: fixed;
 }
-@-webkit-keyframes vDialogZoomIn {
+@-webkit-keyframes vdialogZoomIn {
   from {
     opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
@@ -33,7 +33,7 @@
     opacity: 1;
   }
 }
-@keyframes vDialogZoomIn {
+@keyframes vdialogZoomIn {
   from {
     opacity: 0;
     -webkit-transform: scale3d(.3, .3, .3);
@@ -100,7 +100,7 @@
   position: fixed;
 }
 
-/* vDialog 风格控制 */
+/* vdialog 风格控制 */
 .vdialog {
   background-color: #fff;
   border: 1px solid #bcbcbc;
@@ -133,14 +133,14 @@
 }
 .vdialog .vd-main .vd-icon {
   left: 15px;
-  top: 0;
-  width: 50px;
-  font-size: 38px;
+  top: 2px;
+  width: 45px;
+  font-size: 35px;
   padding: 10px 0;
   line-height: 1em;
 }
 .vdialog .vd-main-with-icon {
-  padding: 5px 15px 0 65px;
+  padding: 5px 15px 0 55px;
 }
 .vdialog .vd-main-with-icon .icon-vd-error:before {
   content: "\e600";
@@ -184,13 +184,19 @@
 }
 .vdialog .vd-footer a.vd-btn {
   color: #fff;
+  margin: 0 .4em;
   padding: .2em .8em;
   border: 1px solid #fff;
   border-radius: 3px;
   background-color: #429cf9;
 }
+.vdialog .vd-footer a.vd-btn:first-child {
+  margin-left: 0;
+}
+.vdialog .vd-footer a.vd-btn:last-child {
+  margin-right: 0;
+}
 .vdialog .vd-footer a.vd-btn-ok {
-  margin-left: .8em;
   border-color: #3488f7;
   background-color: #429cf9;
 }
@@ -204,7 +210,7 @@
   background-color: #000;
 }
 
-/* IE6/7 layout fixed */
+/* IE6/7 */
 .vdialog {
   *padding-top: 3.5em;
 }
@@ -219,4 +225,85 @@
 }
 .vdialog-modal {
   filter: alpha(opacity=60);
+}
+/* mobile */
+@media screen and (max-width:800px){
+  .vdialog {
+    border: 1px solid #e2e2e3;
+  }
+  .vdialog .vd-header {
+    padding: 0;
+  }
+  .vdialog .vd-header .vd-title {
+    font-size: 1.2em;
+    padding: 10px 15px;
+    text-align: center;
+    border-bottom: 0;
+  }
+  .vdialog .vd-header a.vd-close {
+    top: -2px;
+    right: -12px;
+    font-size: 20px;
+    padding: 0;
+    width: 25px;
+    opacity: 1;
+    line-height: 25px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #e2e2e3;
+  }
+  .vdialog .vd-main {
+    padding: 0;
+  }
+  .vdialog .vd-main-with-icon {
+    padding-left: 3.5em;
+  }
+  .vdialog .vd-main .vd-icon {
+    top: -16px;
+  }
+  .vdialog .vd-main .vd-content {
+    padding: 0 1em 1em 1em;
+    word-wrap: break-word;
+    word-break: break-all;
+    min-width: 10em;
+  }
+  .vdialog .vd-footer {
+    padding: 0;
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    text-align: center;
+    border-top: 1px solid #e2e2e3;
+  }
+  .vdialog .vd-footer:before {
+    display: none;
+  }
+  .vdialog .vd-footer a.vd-btn {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    border-width: 0 0 0 1px;
+    border-color: #e2e2e3;
+    margin: 0;
+    padding: .6em 0;
+    border-radius: 0;
+  }
+  .vdialog .vd-footer a.vd-btn:first-child {
+    border-left-width: 0;
+    border-bottom-left-radius: 3px;
+  }
+  .vdialog .vd-footer a.vd-btn:last-child {
+    border-bottom-right-radius: 3px;
+  }
+  .vdialog .vd-footer a.vd-btn:active {
+    background-color: #eee;
+  }
+  .vdialog .vd-footer a.vd-btn-ok {
+    background-color: #fff;
+    color: #00ad0a;
+  }
 }
