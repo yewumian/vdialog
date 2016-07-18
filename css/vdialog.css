@@ -174,13 +174,18 @@
 }
 .vdialog .vd-footer {
   padding: 0 1em 1em;
-  text-align: right;
 }
 .vdialog .vd-footer:before {
   background-color: #eee;
   background-image: linear-gradient(90deg, #fff, #eee);
   height: 1px;
   margin-bottom: 15px;
+}
+.vdialog .vd-footer-rtl {
+  text-align: right;
+}
+.vdialog .vd-footer-ltr {
+  text-align: center;
 }
 .vdialog .vd-footer a.vd-btn {
   color: #fff;

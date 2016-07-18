@@ -1,6 +1,6 @@
 {
   "name": "vdialog",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "基于 HTML5 Dialog API 的优雅对话框组件",
   "main": "./js/lib/vdialog.js",
   "scripts": {

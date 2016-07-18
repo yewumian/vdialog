@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.4.1
+ * vDialog v1.4.2
  * HTML5 based javascript dialog plugin
  * https://vdialog.qque.com
  *
@@ -46,7 +46,7 @@
 }(this, function($) {
   'use strict';
 
-  var vdialog, zIndex = 1000, // jshint ignore:line
+  var vdialog, // jshint ignore:line
     cache = [],
     template = '' +
     '<div class="vdialog">' +
@@ -86,11 +86,15 @@
       top: 'auto',
       padding: 'auto',
       direction: 'rtl' // ltr | rtl
-    }, options);
+    }, VDialog._options, options);
     this._eventQueue = {};
     this._visible = true;
     return this._init();
   }
+
+  VDialog._options = {
+    zIndex: 1000
+  };
 
   /**
    * 初始化对话框
@@ -122,6 +126,8 @@
     this.title(this.options.title);
     // 图标
     this.type(this.options.type);
+    // Footer
+    this.DOM.footer.addClass('vd-footer-' + this.options.direction);
     // 确定按钮
     this.ok(this.options.ok);
     // 取消按钮
@@ -175,7 +181,7 @@
     });
     // 外层
     wrap.css({
-      zIndex: ++zIndex
+      zIndex: ++VDialog._options.zIndex
     });
     wrap.appendTo('body');
     cache.push({
@@ -607,7 +613,7 @@
    */
   VDialog.prototype.showModal = function(anchor) {
     this.DOM.modal = $('<div />').addClass('vdialog-modal').css({
-      zIndex: zIndex
+      zIndex: VDialog._options.zIndex
     }).insertBefore(this.DOM.wrap);
     this.show(anchor);
     return this;
@@ -705,6 +711,10 @@
   };
   vdialog.top = null;
   vdialog._proxy = vdialog;
+  vdialog.config = function(options) {
+    $.extend(VDialog._options, options || {});
+    return this;
+  };
 
   /**
    * vdialog.alert
