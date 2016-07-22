@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.4.2
+ * vDialog v1.5.0
  * HTML5 based javascript dialog plugin
  * https://vdialog.qque.com
  *
@@ -85,6 +85,7 @@
       left: 'auto',
       top: 'auto',
       padding: 'auto',
+      wrapClass: '',
       direction: 'rtl' // ltr | rtl
     }, VDialog._options, options);
     this._eventQueue = {};
@@ -116,6 +117,10 @@
       footer: html.find('.vd-footer'),
       modal: null
     };
+    // mobile 支持
+    mobile && this.DOM.wrap.addClass('vdialog-mobile');
+    // wrap Class
+    this.options.wrapClass && this.DOM.wrap.addClass(this.options.wrapClass);
     // 设置 ID
     if (!this.options.id) {
       this.options.id = Math.random();
@@ -827,6 +832,62 @@
       },
       cancel: function() {
         cancelFn && cancelFn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
+
+  /**
+   * vdialog.loading
+   * @method loading
+   * @param  {String}   content 提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} fn      关闭对话框时，执行的回调
+   * @return {this}
+   */
+  vdialog.loading = function(content, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'toast-loading',
+      wrapClass: 'vdialog-toast',
+      title: false,
+      content: content,
+      modal: false,
+      fixed: true,
+      fire: !mobile,
+      close: function() {
+        fn && fn.call(this);
+      }
+    }, options);
+    return this._proxy(options);
+  };
+
+  /**
+   * vdialog.toast
+   * @method toast
+   * @param  {String}   content 提示内容
+   * @param  {Object}   options 对话框配置信息
+   * @param  {Function} fn      关闭对话框时，执行的回调
+   * @return {this}
+   */
+  vdialog.toast = function(content, options, fn) {
+    if (typeof options === 'function') {
+      fn = options;
+      options = {};
+    }
+    options = $.extend({
+      type: 'toast-success',
+      wrapClass: 'vdialog-toast',
+      title: false,
+      content: content,
+      modal: false,
+      fixed: true,
+      fire: !mobile,
+      close: function() {
+        fn && fn.call(this);
       }
     }, options);
     return this._proxy(options);
