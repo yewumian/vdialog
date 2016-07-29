@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.5.0
+ * vDialog v1.6.0
  * HTML5 based javascript dialog plugin
  * https://vdialog.qque.com
  *
@@ -300,9 +300,15 @@
         text: that.options[buttonValue]
       });
     }
+    that.options[name] = fn;
     // 设置确定按钮回调
     that.button(name, function() {
-      that.options[name] = fn;
+      var returnValue = null, returnDom;
+      returnDom = that.DOM.wrap.find('[data-returnable="true"]');
+      if (returnDom.length > 0) {
+        returnValue = returnDom.data('returnValue') || returnDom.val();
+        that.returnValue = returnValue;
+      }
       if (that.options[name] === true || that.options[name] && that.options[name].call(that) !== false) {
         that.close();
       }
@@ -411,8 +417,6 @@
    * @return {this}
    */
   VDialog.prototype.close = function(fn) {
-    var returnValue = null,
-      returnDom;
     if (fn !== undefined) {
       this.options.close = fn;
       if(this.options.close === false) {
@@ -420,11 +424,6 @@
         this.fire(this.options.fire);
       }
     } else {
-      returnDom = this.DOM.wrap.find('[data-returnable="true"]');
-      if (returnDom.length > 0) {
-        returnValue = returnDom.data('returnValue') || returnDom.val();
-        this.returnValue = returnValue;
-      }
       this.DOM.wrap.remove();
       this.DOM.modal && this.DOM.modal.remove();
       for (var i = 0; i < cache.length; i++) {

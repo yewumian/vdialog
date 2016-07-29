@@ -342,6 +342,7 @@
   color: #fff;
 }
 .vdialog-toast .vd-main-with-icon .icon-vd-toast-loading {
+  animation: toast-loading 2s linear infinite;
   -webkit-animation: toast-loading 2s linear infinite;
 }
 @keyframes toast-loading{
