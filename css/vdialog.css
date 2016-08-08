@@ -167,7 +167,7 @@
   color: #eea237;
 }
 .vdialog .vd-main .vd-content {
-  padding: 1em;
+  padding: 2em;
   min-width: 8em;
 }
 .vdialog-no-padding {
@@ -194,6 +194,11 @@
 }
 .vdialog .vd-footer-ltr {
   text-align: center;
+}
+.vdialog .vd-footer-ltr:before {
+  background-image: none;
+  margin-left:-1em;
+  margin-right: -1em;
 }
 .vdialog .vd-footer a.vd-btn {
   color: #fff;
