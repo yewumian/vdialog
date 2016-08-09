@@ -337,10 +337,13 @@
   text-align: center;
   width: auto;
   font-size: 50px;
+  line-height: 2em;
+  margin-top: 0;
+  padding: 0;
 }
 .vdialog-toast .vd-main-with-icon {
-  margin-top: 15px;
-  padding: 10px 0;
+  margin-top: 0;
+  padding: 0;
 }
 .vdialog-toast .vd-main-with-icon .icon-vd-toast-loading:before,
 .vdialog-toast .vd-main-with-icon .icon-vd-toast-success:before{
@@ -359,7 +362,8 @@
   }
 }
 .vdialog-toast .vd-main .vd-content {
-  padding: 10px;
+  padding: 0 2em 1em;
   color: #fff;
   text-align: center;
+  min-width: 6em;
 }
