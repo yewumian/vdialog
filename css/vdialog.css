@@ -136,11 +136,10 @@
   top: 2px;
   width: 45px;
   font-size: 35px;
-  padding: 10px 0;
-  line-height: 1em;
+  padding: 1em 0;
 }
 .vdialog .vd-main-with-icon {
-  padding: 5px 15px 0 55px;
+  padding: 5px 15px 0 50px;
 }
 .vdialog .vd-main-with-icon .icon-vd-error:before {
   content: "\e600";
