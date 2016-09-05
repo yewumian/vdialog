@@ -1,5 +1,5 @@
 /*!
- * vDialog v1.6.0
+ * vDialog v1.6.5
  * HTML5 based javascript dialog plugin
  * https://vdialog.qque.com
  *
@@ -63,7 +63,7 @@
   var mobile = /(iPhone|iPod|Android|ios)/i.test(navigator.userAgent);
 
   function VDialog(options) {
-    this.version = '1.4.1';
+    this.version = '1.6.5';
     this.options = $.extend({
       id: '',
       type: '',
@@ -616,7 +616,7 @@
    * @return {this}
    */
   VDialog.prototype.showModal = function(anchor) {
-    this.DOM.modal = $('<div />').addClass('vdialog-modal').css({
+    this.DOM.modal = this.DOM.modal || $('<div />').addClass('vdialog-modal').css({
       zIndex: VDialog._options.zIndex
     }).insertBefore(this.DOM.wrap);
     this.show(anchor);
